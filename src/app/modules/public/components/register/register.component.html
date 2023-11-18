@@ -34,7 +34,7 @@
         <mat-form-field>
           <mat-label>Password</mat-label>
           <input [type]="hidePassword ? 'password' : 'text'" matInput placeholder="Create a password" formControlName="password">
-          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+          <button mat-icon-button type="button" matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
             <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
           <mat-error
@@ -46,19 +46,19 @@
 
         <mat-form-field>
           <mat-label>Password Confirmation</mat-label>
-          <input [type]="hidePasswordConfirm ? 'password' : 'text'" matInput placeholder="Confirm the password" formControlName="passwordConfirm">
-          <button mat-icon-button matSuffix (click)="hidePasswordConfirm = !hidePasswordConfirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePasswordConfirm">
-            <mat-icon>{{hidePasswordConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <input [type]="hidePasswordConfirmation ? 'password' : 'text'" matInput placeholder="Confirm the password" formControlName="password_confirmation">
+          <button mat-icon-button type="button" matSuffix (click)="hidePasswordConfirmation = !hidePasswordConfirmation" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePasswordConfirmation">
+            <mat-icon>{{hidePasswordConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
           <mat-error
-            *ngIf="this.registerForm.get('passwordConfirm')?.touched && this.registerForm.get('passwordConfirm')?.hasError('required')"
+            *ngIf="this.registerForm.get('password_confirmation')?.touched && this.registerForm.get('password_confirmation')?.hasError('required')"
           >
             Password confirmation is required
           </mat-error>
         </mat-form-field>
 
         <mat-error
-          *ngIf="this.registerForm.get('passwordConfirm')?.dirty && this.registerForm.hasError('passwordsNotMatching')"
+          *ngIf="this.registerForm.get('password_confirmation')?.dirty && this.registerForm.hasError('passwordsNotMatching')"
         >
           Passwords are not matching!
         </mat-error>

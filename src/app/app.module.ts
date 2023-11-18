@@ -9,6 +9,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
 
     AppRoutingModule,
+
+    MatSnackBarModule,
 
     CoreModule,
     SharedModule,
