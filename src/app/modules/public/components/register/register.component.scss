@@ -1,0 +1,57 @@
+:host {
+  display: flex;
+  justify-content: center;
+  margin: 100px 0px;
+}
+
+mat-card {
+  max-width: 600px;
+  width: 350px;
+
+  mat-card-title {
+    display: flex;
+    justify-content: left;
+    padding: 16px;
+  }
+
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+
+    form {
+      mat-form-field {
+        width: 100%;
+        margin-top: 15px;
+      }
+
+      mat-divider {
+        margin: 15px 0px;
+      }
+
+      .error {
+        padding: 16px;
+        width: 300px;
+        color: white;
+        background-color: red;
+      }
+
+      .button {
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+          width: 100%;
+        }
+      }
+
+      .center {
+        display: flex;
+        justify-content: center;
+
+        a {
+          color: inherit;
+        }
+      }
+    }
+  }
+}
