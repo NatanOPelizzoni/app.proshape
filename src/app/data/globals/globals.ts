@@ -1,3 +1,3 @@
 export let globals = {
-  isLogged: false,
+  isLogged: localStorage.getItem('isLogged') ?? false,
 }

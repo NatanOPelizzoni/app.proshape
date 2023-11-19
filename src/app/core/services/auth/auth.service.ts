@@ -46,6 +46,7 @@ export class AuthService {
           localStorage.setItem(environment.LOCALSTORAGE_TOKEN_KEY, response.token);
           localStorage.setItem(environment.LOCALSTORAGE_TOKEN_TYPE, response.token_type);
           globals.isLogged = true;
+          localStorage.setItem('isLogged', globals.isLogged.toString());
         }
       ),
       tap(
