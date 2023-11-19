@@ -8,6 +8,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RegisterRequest } from 'src/app/data/interfaces/register/register-request';
 import { RegisterResponse } from 'src/app/data/interfaces/register/register-response';
 import { environment } from 'src/environments/environment';
+import { LoginRequest } from 'src/app/data/interfaces/login/login-request';
+import { LoginResponse } from 'src/app/data/interfaces/login/login-response';
+import { LOCALSTORAGE_TOKEN_KEY, LOCALSTORAGE_TOKEN_TYPE } from 'src/app/app.module';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +37,27 @@ export class AuthService {
         )
       )
     )
+  }
+
+  login(loginRequest: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, loginRequest).pipe(
+      tap(
+        (response: LoginResponse) => {
+          localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, response.token);
+          localStorage.setItem(LOCALSTORAGE_TOKEN_TYPE, response.token_type);
+        }
+      ),
+      tap(
+        () => this.snackBar.open(
+          'Login Successfull',
+          'Close',
+          {
+            duration: 2000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          }
+        )
+      )
+    );
   }
 }

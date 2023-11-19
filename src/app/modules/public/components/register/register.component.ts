@@ -41,9 +41,7 @@ export class RegisterComponent {
     this.authService.register(formValue).pipe(
       tap(
         () => {
-          console.log('User created successfully');
-
-          // this.router.navigate(['../login']);
+          this.router.navigate(['/public/login']);
         }
       )
     ).subscribe();

@@ -11,6 +11,15 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+export const LOCALSTORAGE_TOKEN_KEY = 'proshape-token';
+export const LOCALSTORAGE_TOKEN_TYPE = 'proshape-token-type';
+
+export function tokenGetter() {
+  const token = localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
+  const tokenType = localStorage.getItem(LOCALSTORAGE_TOKEN_TYPE);
+  return `${tokenType} ${token}`;
+}
+
 @NgModule({
   declarations: [
     AppComponent,
