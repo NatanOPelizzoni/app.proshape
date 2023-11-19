@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/public/public.module').then(m => m.PublicModule)
   },
   {
+    path: 'protected',
+    loadChildren: () => import('./modules/protected/protected.module').then(m => m.ProtectedModule)
+  },
+  {
     path: '**',
     redirectTo: 'public',
     pathMatch: 'full'

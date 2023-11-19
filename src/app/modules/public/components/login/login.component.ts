@@ -32,7 +32,7 @@ export class LoginComponent {
     this.authService.login(formValue).pipe(
       tap(
         () => {
-          console.log('login successful');
+          this.router.navigate(['../../../protected/dashboard']);
         }
       )
     ).subscribe();
