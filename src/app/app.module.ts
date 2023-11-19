@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
+import { LayoutComponent } from './layout/layout.component';
 
 export function tokenGetter() {
   const token = localStorage.getItem(environment.LOCALSTORAGE_TOKEN_KEY);
@@ -21,6 +22,7 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
