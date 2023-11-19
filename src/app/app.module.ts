@@ -14,11 +14,10 @@ import { LayoutComponent } from './layout/layout.component';
 import { MaterialModule } from './shared/material/material.module';
 import { HeaderComponent } from './layout/components/header/header.component';
 import { SidenavListComponent } from './layout/components/sidenav-list/sidenav-list.component';
+import { JwtModule } from '@auth0/angular-jwt';
 
 export function tokenGetter() {
-  const token = localStorage.getItem(environment.LOCALSTORAGE_TOKEN_KEY);
-  const tokenType = localStorage.getItem(environment.LOCALSTORAGE_TOKEN_TYPE);
-  return `${tokenType} ${token}`;
+  return localStorage.getItem(environment.LOCALSTORAGE_TOKEN_KEY);
 }
 
 @NgModule({
@@ -38,6 +37,13 @@ export function tokenGetter() {
     AppRoutingModule,
     CoreModule,
     SharedModule,
+
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:3000', 'localhost:8080']
+      }
+    }),
   ],
   providers: [
   ],
