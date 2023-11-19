@@ -12,6 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { LayoutComponent } from './layout/layout.component';
 import { MaterialModule } from './shared/material/material.module';
+import { HeaderComponent } from './layout/components/header/header.component';
+import { SidenavListComponent } from './layout/components/sidenav-list/sidenav-list.component';
 
 export function tokenGetter() {
   const token = localStorage.getItem(environment.LOCALSTORAGE_TOKEN_KEY);
@@ -23,6 +25,8 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     LayoutComponent,
+    HeaderComponent,
+    SidenavListComponent,
   ],
   imports: [
     BrowserModule,

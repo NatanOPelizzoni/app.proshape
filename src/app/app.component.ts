@@ -8,5 +8,5 @@ import { globals } from './data/globals/globals';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'proshape';
+  globals = globals;
 }
