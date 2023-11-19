@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RegisterRequest } from 'src/app/data/interfaces/register/register-request';
 import { RegisterResponse } from 'src/app/data/interfaces/register/register-response';
 import { environment } from 'src/app/data/constants/environment';
+import { globals } from 'src/app/data/globals/globals';
 import { LoginRequest } from 'src/app/data/interfaces/login/login-request';
 import { LoginResponse } from 'src/app/data/interfaces/login/login-response';
 
@@ -44,6 +45,7 @@ export class AuthService {
         (response: LoginResponse) => {
           localStorage.setItem(environment.LOCALSTORAGE_TOKEN_KEY, response.token);
           localStorage.setItem(environment.LOCALSTORAGE_TOKEN_TYPE, response.token_type);
+          globals.isLogged = true;
         }
       ),
       tap(
