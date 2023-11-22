@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 100%;
+    max-width: 400px;
+    opacity: 0.6;
+  }
+}

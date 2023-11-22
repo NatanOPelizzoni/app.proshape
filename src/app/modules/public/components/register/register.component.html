@@ -1,0 +1,82 @@
+<div ngClass="primary">
+  <mat-card>
+
+    <mat-card-title>Registration</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input type="text" matInput placeholder="Enter your name" formControlName="name">
+          <mat-error
+            *ngIf="this.registerForm.get('name')?.touched && this.registerForm.get('name')?.hasError('required')"
+          >
+            Name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input type="email" matInput placeholder="Enter your email" formControlName="email">
+          <mat-error
+            *ngIf="this.registerForm.get('email')?.touched && this.registerForm.get('email')?.hasError('required')"
+          >
+            Email is required
+          </mat-error>
+          <mat-error
+            *ngIf="this.registerForm.get('email')?.touched && this.registerForm.get('email')?.hasError('email')"
+          >
+            Email must be a valid Email
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input [type]="hidePassword ? 'password' : 'text'" matInput placeholder="Create a password" formControlName="password">
+          <button mat-icon-button type="button" matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="this.registerForm.get('password')?.touched && this.registerForm.get('password')?.hasError('required')"
+          >
+            Password is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password Confirmation</mat-label>
+          <input [type]="hidePasswordConfirmation ? 'password' : 'text'" matInput placeholder="Confirm the password" formControlName="password_confirmation">
+          <button mat-icon-button type="button" matSuffix (click)="hidePasswordConfirmation = !hidePasswordConfirmation" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePasswordConfirmation">
+            <mat-icon>{{hidePasswordConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="this.registerForm.get('password_confirmation')?.touched && this.registerForm.get('password_confirmation')?.hasError('required')"
+          >
+            Password confirmation is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-error
+          *ngIf="this.registerForm.get('password_confirmation')?.dirty && this.registerForm.hasError('passwordsNotMatching')"
+        >
+          Passwords are not matching!
+        </mat-error>
+
+        <div class="button">
+          <button type="submit" mat-raised-button color="primary" [disabled]="!registerForm.valid">Register</button>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="center">
+          <span>
+            Already have an account?
+            <a routerLink="/public/login">Login</a>
+          </span>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
