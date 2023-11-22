@@ -1,1 +1,18 @@
-<app-students-table></app-students-table>
+<div class="container">
+  <div class="div-buttons margin-top margin-bottom col-md-12">
+    <button
+      mat-raised-button
+      #tooltip="matTooltip"
+      color="primary"
+      matTooltip="Add new student"
+      matTooltipPosition="above"
+      (click)="openDialog('new', 'student')"
+    >
+      <mat-icon class="margin-right">person_add</mat-icon>
+      New
+    </button>
+  </div>
+  <div class="col-md-12">
+    <app-students-table></app-students-table>
+  </div>
+</div>

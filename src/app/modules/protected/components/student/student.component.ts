@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class StudentComponent {
 
+  openDialog(action: string, form: string) {
+    console.table({action, form});
+  }
 }
