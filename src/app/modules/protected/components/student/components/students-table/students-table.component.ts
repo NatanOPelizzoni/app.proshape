@@ -16,7 +16,7 @@ export class StudentsTableComponent implements AfterViewInit {
   dataSource = new StudentsTableDataSource();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns = ['id', 'name', 'teste1', 'teste2', 'teste3', 'teste4'];
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;

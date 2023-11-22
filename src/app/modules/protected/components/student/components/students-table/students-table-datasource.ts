@@ -6,32 +6,36 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 
 // TODO: Replace this with your own data model type
 export interface StudentsTableItem {
-  name: string;
   id: number;
+  name: string;
+  teste1: string;
+  teste2: string;
+  teste3: string;
+  teste4: string;
 }
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: StudentsTableItem[] = [
-  {id: 1, name: 'Hydrogen'},
-  {id: 2, name: 'Helium'},
-  {id: 3, name: 'Lithium'},
-  {id: 4, name: 'Beryllium'},
-  {id: 5, name: 'Boron'},
-  {id: 6, name: 'Carbon'},
-  {id: 7, name: 'Nitrogen'},
-  {id: 8, name: 'Oxygen'},
-  {id: 9, name: 'Fluorine'},
-  {id: 10, name: 'Neon'},
-  {id: 11, name: 'Sodium'},
-  {id: 12, name: 'Magnesium'},
-  {id: 13, name: 'Aluminum'},
-  {id: 14, name: 'Silicon'},
-  {id: 15, name: 'Phosphorus'},
-  {id: 16, name: 'Sulfur'},
-  {id: 17, name: 'Chlorine'},
-  {id: 18, name: 'Argon'},
-  {id: 19, name: 'Potassium'},
-  {id: 20, name: 'Calcium'},
+  {id: 1, name: 'Hydrogen', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 2, name: 'Helium', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 3, name: 'Lithium', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 4, name: 'Beryllium', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 5, name: 'Boron', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 6, name: 'Carbon', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 7, name: 'Nitrogen', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 8, name: 'Oxygen', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 9, name: 'Fluorine', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 10, name: 'Neon', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 11, name: 'Sodium', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 12, name: 'Magnesium', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 13, name: 'Aluminum', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 14, name: 'Silicon', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 15, name: 'Phosphorus', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 16, name: 'Sulfur', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 17, name: 'Chlorine', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 18, name: 'Argon', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 19, name: 'Potassium', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
+  {id: 20, name: 'Calcium', teste1: 'teste1', teste2: 'teste2', teste3: 'teste3', teste4: 'teste4'},
 ];
 
 /**
@@ -97,8 +101,12 @@ export class StudentsTableDataSource extends DataSource<StudentsTableItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
         case 'id': return compare(+a.id, +b.id, isAsc);
+        case 'name': return compare(a.name, b.name, isAsc);
+        case 'teste1': return compare(a.teste1, b.teste1, isAsc);
+        case 'teste2': return compare(a.teste2, b.teste2, isAsc);
+        case 'teste3': return compare(a.teste3, b.teste3, isAsc);
+        case 'teste4': return compare(a.teste4, b.teste4, isAsc);
         default: return 0;
       }
     });
