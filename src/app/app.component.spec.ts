@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'app.proshape'`, () => {
+  it(`should have as title 'proshape'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('app.proshape');
+    expect(app.title).toEqual('proshape');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('app.proshape app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('proshape app is running!');
   });
 });

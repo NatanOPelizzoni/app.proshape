@@ -1,0 +1,15 @@
+:host {
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+  a:hover, a:active{
+    color: lightgray;
+  }
+
+  .img-logo {
+    width: 70px;
+    height: 70px;
+  }
+}
