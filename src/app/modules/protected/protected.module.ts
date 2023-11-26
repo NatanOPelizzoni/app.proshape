@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProtectedRoutingModule } from './protected-routing.module';
 import { MaterialModule } from 'src/app/shared/material/material.module';
+import { StudentModule } from './components/student/student.module';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
   imports: [
     CommonModule,
     ProtectedRoutingModule,
-    MaterialModule
+    MaterialModule,
+    StudentModule,
   ]
 })
 export class ProtectedModule { }

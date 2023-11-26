@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BaseDialogComponent } from './components/base-dialog/base-dialog.component';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { BaseDialogComponent } from './components/base-dialog/base-dialog.compon
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    MaterialModule,
   ],
   exports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { BaseDialogComponent } from './components/base-dialog/base-dialog.compon
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    MaterialModule,
   ]
 })
 export class SharedModule { }

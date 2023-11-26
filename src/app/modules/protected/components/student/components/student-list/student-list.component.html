@@ -1,0 +1,87 @@
+<div class="body col-md-12">
+  <div class="col-md-12">
+    <div class="header">
+      <h1>
+        <b>Students</b>
+      </h1>
+      <button mat-raised-button color="primary" routerLink="/protected/students/create">New</button>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let student"> {{student.name}} </td>
+        </ng-container>
+
+        <!-- Birth Date Column -->
+        <ng-container matColumnDef="birth_date">
+          <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+          <td mat-cell *matCellDef="let student"> {{student.birth_date | date: 'MM/dd/yyyy' }} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef> Weight </th>
+          <td mat-cell *matCellDef="let student"> {{student.weight}} </td>
+        </ng-container>
+
+        <!-- Height Column -->
+        <ng-container matColumnDef="height">
+          <th mat-header-cell *matHeaderCellDef> Height </th>
+          <td mat-cell *matCellDef="let student"> {{student.height}} </td>
+        </ng-container>
+
+        <!-- Training Goals Column -->
+        <ng-container matColumnDef="training_goals">
+          <th mat-header-cell *matHeaderCellDef> Training Goals </th>
+          <td mat-cell *matCellDef="let student"> {{student.training_goals}} </td>
+        </ng-container>
+
+        <!-- Training Frequency Column -->
+        <ng-container matColumnDef="training_frequency">
+          <th mat-header-cell *matHeaderCellDef> Training Frequency </th>
+          <td mat-cell *matCellDef="let student"> {{student.training_frequency}} </td>
+        </ng-container>
+
+        <!-- Health Restrictions Column -->
+        <ng-container matColumnDef="health_restrictions">
+          <th mat-header-cell *matHeaderCellDef> Health Restrictions </th>
+          <td mat-cell *matCellDef="let student"> {{student?.health_restrictions}} </td>
+        </ng-container>
+
+        <!-- Actions Restrictions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let student" ngClass="action-buttons-group">
+            <button mat-icon-button color="primary" matTooltip="View" [matTooltipPosition]="'above'">
+              <mat-icon>remove_red_eye</mat-icon>
+            </button>
+
+            <button mat-icon-button color="primary" matTooltip="Edit"[matTooltipPosition]="'above'">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" matTooltip="Delete"[matTooltipPosition]="'above'">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of students">
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+
