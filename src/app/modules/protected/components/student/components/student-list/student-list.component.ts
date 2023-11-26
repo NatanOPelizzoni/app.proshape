@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import { Student } from '../../model/student';
 import { StudentService } from '../../service/student.service';
+import { StudentRequest } from 'src/app/data/interfaces/student/student-request';
 
 @Component({
   selector: 'app-student-list',
@@ -11,7 +11,7 @@ import { StudentService } from '../../service/student.service';
 })
 export class StudentListComponent implements AfterViewInit {
   displayedColumns: string[] = ['name', 'birth_date', 'weight', 'height', 'training_goals', 'training_frequency', 'health_restrictions', 'actions'];
-  dataSource = new MatTableDataSource<Student>;
+  dataSource = new MatTableDataSource<StudentRequest>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

@@ -1,1 +1,103 @@
-<p>student-create works!</p>
+<div ngClass="primary">
+  <mat-card>
+
+    <mat-card-title>New Student</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="studantForm" (ngSubmit)="save()">
+
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input type="text" matInput placeholder="Enter your name" formControlName="name">
+          <mat-error
+            *ngIf="this.studantForm.get('name')?.touched && this.studantForm.get('name')?.hasError('required')"
+          >
+            Name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Birth date</mat-label>
+          <input matInput [matDatepicker]="birth_date" formControlName="birth_date">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="birth_date"></mat-datepicker-toggle>
+          <mat-datepicker #birth_date></mat-datepicker>
+          <mat-error
+            *ngIf="this.studantForm.get('birth_date')?.touched && this.studantForm.get('birth_date')?.hasError('required')"
+          >
+            Birth date is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Weight</mat-label>
+          <input type="number" matInput placeholder="Enter your weight" formControlName="weight">
+          <mat-error
+            *ngIf="this.studantForm.get('weight')?.touched && this.studantForm.get('weight')?.hasError('required')"
+          >
+            Weight is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Height</mat-label>
+          <input type="number" matInput placeholder="Enter your height" formControlName="height">
+          <mat-error
+            *ngIf="this.studantForm.get('height')?.touched && this.studantForm.get('height')?.hasError('required')"
+          >
+            Height is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Training goals</mat-label>
+          <input type="text" matInput placeholder="Enter your training goals" formControlName="training_goals">
+          <mat-error
+            *ngIf="this.studantForm.get('training_goals')?.touched && this.studantForm.get('training_goals')?.hasError('required')"
+          >
+            Training goals is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Training frequency</mat-label>
+          <input type="number" min="1" max="7" matInput placeholder="Enter your training frequency" formControlName="training_frequency">
+          <mat-error
+            *ngIf="this.studantForm.get('training_frequency')?.touched && this.studantForm.get('training_frequency')?.hasError('required')"
+          >
+            Training frequency is required
+          </mat-error>
+          <mat-error
+            *ngIf="this.studantForm.get('training_frequency')?.touched && this.studantForm.get('training_frequency')?.hasError('min')"
+          >
+            Training frequency can be at least 1
+          </mat-error>
+          <mat-error
+            *ngIf="this.studantForm.get('training_frequency')?.touched && this.studantForm.get('training_frequency')?.hasError('max')"
+          >
+            Training frequency can be at most 7
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field [style.fontSize]="'16px'">
+          <mat-label>Health restrictions</mat-label>
+          <textarea
+            matInput
+            placeholder="Enter your health restrictions"
+            formControlName="health_restrictions"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+          >
+          </textarea>
+        </mat-form-field>
+
+        <div class="button">
+          <button type="submit" mat-raised-button color="primary" [disabled]="!studantForm.valid">Save</button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
