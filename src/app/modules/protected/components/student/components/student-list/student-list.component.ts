@@ -21,7 +21,6 @@ export class StudentListComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.studentService.getAll().subscribe((response: any)=>{
-      // TODO: Create a StudentResponse interface
       this.dataSource.data = response.data;
     })
 

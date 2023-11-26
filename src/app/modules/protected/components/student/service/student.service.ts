@@ -23,7 +23,6 @@ export class StudentService {
   ) { }
 
   create(student: StudentRequest): Observable<StudentResponse> {
-    // TODO: Crate a StudentRequest interface
     return this.httpClient.post<StudentResponse>(`${this.apiUrl}/student`, JSON.stringify(student), this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
@@ -45,7 +44,6 @@ export class StudentService {
   }
 
   update(id: number, student: StudentRequest): Observable<StudentResponse> {
-    // TODO: Crate a StudentRequest interface
     return this.httpClient.put<StudentResponse>(`${this.apiUrl}/student/${id}`, JSON.stringify(student), this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
