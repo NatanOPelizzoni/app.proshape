@@ -269,7 +269,8 @@ a {
   border-radius: 12px;
   transition: background-color 0.2s, box-shadow 0.2s;
 }
-.layout-menu ul a .layout-menuitem-icon {
+.layout-menu ul a .layout-menuitem-icon,
+.layout-menu ul a .material-icons {
   margin-right: 0.5rem;
 }
 .layout-menu ul a .layout-submenu-toggler {

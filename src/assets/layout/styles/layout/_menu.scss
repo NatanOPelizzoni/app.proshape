@@ -67,7 +67,7 @@
             border-radius: $borderRadius;
             transition: background-color $transitionDuration, box-shadow $transitionDuration;
 
-            .layout-menuitem-icon {
+            .layout-menuitem-icon, .material-icons {
                 margin-right: .5rem;
             }
 
