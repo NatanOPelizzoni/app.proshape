@@ -8,6 +8,8 @@ import { User } from "../../data/interfaces/user";
 import { UserService } from "../../core/services/user.service";
 import { MessageService } from "primeng/api";
 import { InputTextModule } from "primeng/inputtext";
+import { DialogModule } from "primeng/dialog";
+import { NgIf } from "@angular/common";
 
 @Component({
 	selector: 'app-user',
@@ -18,15 +20,15 @@ import { InputTextModule } from "primeng/inputtext";
 		ButtonDirective,
 		Ripple,
 		TableModule,
-		InputTextModule
+		InputTextModule,
+		DialogModule,
+		NgIf
 	],
 	providers: [MessageService],
 	templateUrl: './user.component.html',
 	styleUrl: './user.component.scss'
 })
 export class UserComponent implements OnInit {
-
-	userDialog: boolean = false;
 
 	deleteUserDialog: boolean = false;
 
@@ -38,8 +40,6 @@ export class UserComponent implements OnInit {
 
 	selectedUsers: User[] = [];
 
-	submitted: boolean = false;
-
 	cols: any[] = [];
 
 	statuses: any[] = [];
@@ -48,7 +48,7 @@ export class UserComponent implements OnInit {
 
 	constructor(
 		private userService: UserService,
-		private MessageService: MessageService
+		private messageService: MessageService
 	) {
 	}
 
@@ -70,6 +70,24 @@ export class UserComponent implements OnInit {
 	deleteUser(user: User) {
 		this.deleteUserDialog = true;
 		this.user = { ...user };
+	}
+
+	confirmDelete() {
+		this.deleteUserDialog = false;
+		this.users = this.users.filter(val => val.id !== this.user.id);
+		this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Usuário deletado', life: 3000 });
+		this.user = {};
+	}
+
+	deleteSelectedProducts() {
+		this.deleteUsersDialog = true;
+	}
+
+	confirmDeleteSelected() {
+		this.deleteUsersDialog = false;
+		this.users = this.users.filter(val => !this.selectedUsers.includes(val));
+		this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Usuários Deletados', life: 3000 });
+		this.selectedUsers = [];
 	}
 
 	onGlobalFilter(table: Table, event: Event) {

@@ -1,11 +1,12 @@
 <div class="grid">
 	<div class="col-12">
 		<div class="card px-6 py-6">
+			<p-toast></p-toast>
 			<p-toolbar styleClass="mb-4">
 				<ng-template pTemplate="left">
 					<div class="my-2">
 						<button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2"></button>
-						<button pButton pRipple label="Deletar" icon="pi pi-trash" class="p-button-danger"></button>
+						<button pButton pRipple label="Deletar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
 					</div>
 				</ng-template>
 			</p-toolbar>
@@ -87,5 +88,27 @@
 				</ng-template>
 			</p-table>
 		</div>
+
+		<p-dialog [(visible)]="deleteUserDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+			<div class="flex align-items-center justify-content-center">
+				<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+				<span *ngIf="user"> Tem certeza de que deseja excluir <b>{{user.name}}</b>?</span>
+			</div>
+			<ng-template pTemplate="footer">
+				<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteUserDialog = false"></button>
+				<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDelete()"></button>
+			</ng-template>
+		</p-dialog>
+
+		<p-dialog [(visible)]="deleteUsersDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+			<div class="flex align-items-center justify-content-center">
+				<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+				<span>Tem certeza de que deseja excluir os usuários selecionados?</span>
+			</div>
+			<ng-template pTemplate="footer">
+				<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteUsersDialog = false"></button>
+				<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDeleteSelected()"></button>
+			</ng-template>
+		</p-dialog>
 	</div>
 </div>
