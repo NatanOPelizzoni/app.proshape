@@ -67,6 +67,7 @@ export class UserFormComponent implements OnInit, OnDestroy, AfterContentInit {
 	}
 
 	ngOnDestroy() {
+		this.subscriptions.forEach(element => element.unsubscribe());
 	}
 
 	ngAfterContentInit() {
