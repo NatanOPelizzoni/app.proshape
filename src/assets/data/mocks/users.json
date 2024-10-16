@@ -5,7 +5,7 @@
 			"name": "Admin",
 			"email": "natan2624@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 1
 		},
 		{
@@ -13,7 +13,7 @@
 			"name": "User2",
 			"email": "use2email.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -21,7 +21,7 @@
 			"name": "User3",
 			"email": "use3@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -29,7 +29,7 @@
 			"name": "User4",
 			"email": "use4@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -37,7 +37,7 @@
 			"name": "User5",
 			"email": "use5@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "I",
 			"role_id": 2
 		},
 		{
@@ -45,7 +45,7 @@
 			"name": "User6",
 			"email": "use6@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "I",
 			"role_id": 3
 		},
 		{
@@ -53,7 +53,7 @@
 			"name": "User7",
 			"email": "use7@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "I",
 			"role_id": 2
 		},
 		{
@@ -61,7 +61,7 @@
 			"name": "User8",
 			"email": "use8@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -69,7 +69,7 @@
 			"name": "User9",
 			"email": "use9@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -77,7 +77,7 @@
 			"name": "User10",
 			"email": "user10gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -85,7 +85,7 @@
 			"name": "User11",
 			"email": "user11@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -93,7 +93,7 @@
 			"name": "User12",
 			"email": "user12@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -101,7 +101,7 @@
 			"name": "User13",
 			"email": "user13@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -109,7 +109,7 @@
 			"name": "User14",
 			"email": "user14@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -117,7 +117,7 @@
 			"name": "User15",
 			"email": "user15@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -125,7 +125,7 @@
 			"name": "User16",
 			"email": "user16@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "I",
 			"role_id": 3
 		},
 		{
@@ -133,7 +133,7 @@
 			"name": "User17",
 			"email": "user17@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -141,7 +141,7 @@
 			"name": "User18",
 			"email": "user18@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -149,7 +149,7 @@
 			"name": "User19",
 			"email": "user19@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -157,7 +157,7 @@
 			"name": "User20",
 			"email": "user20@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -165,7 +165,7 @@
 			"name": "User21",
 			"email": "user21@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -173,7 +173,7 @@
 			"name": "User22",
 			"email": "user22@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -181,7 +181,7 @@
 			"name": "User23",
 			"email": "user23@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -189,7 +189,7 @@
 			"name": "User24",
 			"email": "user24@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "I",
 			"role_id": 3
 		},
 		{
@@ -197,7 +197,7 @@
 			"name": "User25",
 			"email": "user25@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -205,7 +205,7 @@
 			"name": "User26",
 			"email": "user26@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -213,7 +213,7 @@
 			"name": "User27",
 			"email": "user27@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -221,7 +221,7 @@
 			"name": "User28",
 			"email": "user28@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -229,7 +229,7 @@
 			"name": "User29",
 			"email": "user29@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -237,7 +237,7 @@
 			"name": "User30",
 			"email": "user30@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "I",
 			"role_id": 3
 		},
 		{
@@ -245,7 +245,7 @@
 			"name": "User31",
 			"email": "user31@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -253,7 +253,7 @@
 			"name": "User32",
 			"email": "user32@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -261,7 +261,7 @@
 			"name": "User33",
 			"email": "user33@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -269,7 +269,7 @@
 			"name": "User34",
 			"email": "user34@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -277,7 +277,7 @@
 			"name": "User35",
 			"email": "user35@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -285,7 +285,7 @@
 			"name": "User36",
 			"email": "user36@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -293,7 +293,7 @@
 			"name": "User37",
 			"email": "user37@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -301,7 +301,7 @@
 			"name": "User38",
 			"email": "user38@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -309,7 +309,7 @@
 			"name": "User39",
 			"email": "user39@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		},
 		{
@@ -317,7 +317,7 @@
 			"name": "User40",
 			"email": "user40@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 3
 		},
 		{
@@ -325,9 +325,8 @@
 			"name": "User41",
 			"email": "user41@gmail.com",
 			"password": "secret",
-			"active": true,
+			"status": "A",
 			"role_id": 2
 		}
-
 	]
 }

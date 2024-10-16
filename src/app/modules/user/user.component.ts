@@ -5,12 +5,12 @@ import { ButtonDirective } from "primeng/button";
 import { Ripple } from "primeng/ripple";
 import { Table, TableModule } from "primeng/table";
 import { User } from "../../data/interfaces/user";
-import { UserService } from "../../core/services/user.service";
+import { UserService } from "./user.service";
 import { MessageService } from "primeng/api";
 import { InputTextModule } from "primeng/inputtext";
 import { DialogModule } from "primeng/dialog";
 import { NgIf } from "@angular/common";
-import { RouterLink } from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: 'app-user',
@@ -23,8 +23,7 @@ import { RouterLink } from "@angular/router";
 		TableModule,
 		InputTextModule,
 		DialogModule,
-		NgIf,
-		RouterLink
+		NgIf
 	],
 	templateUrl: './user.component.html',
 	styleUrl: './user.component.scss'
@@ -49,12 +48,13 @@ export class UserComponent implements OnInit {
 
 	constructor(
 		private userService: UserService,
-		private messageService: MessageService
+		private messageService: MessageService,
+		private router: Router,
 	) {
 	}
 
 	ngOnInit() {
-		this.userService.getUsers().then(data => this.users = data);
+		this.userService.getAll().then(data => this.users = data);
 
 		this.cols = [
 			{field: 'id', header: 'ID'},
@@ -64,30 +64,35 @@ export class UserComponent implements OnInit {
 		];
 	}
 
+	openNew() {
+		this.router.navigate([`app/user/create`]);
+	}
+
 	editUser(user: User) {
-		this.user = { ...user };
+		this.user = {...user};
+		this.router.navigate([`app/user/${user.id}/update`]);
 	}
 
 	deleteUser(user: User) {
 		this.deleteUserDialog = true;
-		this.user = { ...user };
+		this.user = {...user};
 	}
 
 	confirmDelete() {
 		this.deleteUserDialog = false;
 		this.users = this.users.filter(val => val.id !== this.user.id);
-		this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Usuário deletado', life: 3000 });
+		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Usuário deletado', life: 3000});
 		this.user = {};
 	}
 
-	deleteSelectedProducts() {
+	deleteSelectedUsers() {
 		this.deleteUsersDialog = true;
 	}
 
 	confirmDeleteSelected() {
 		this.deleteUsersDialog = false;
 		this.users = this.users.filter(val => !this.selectedUsers.includes(val));
-		this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Usuários Deletados', life: 3000 });
+		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Usuários Deletados', life: 3000});
 		this.selectedUsers = [];
 	}
 

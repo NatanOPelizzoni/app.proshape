@@ -7,8 +7,8 @@
 				</ng-template>
 				<ng-template pTemplate="right">
 					<div class="my-2">
-						<button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" [routerLink]="['/app/user/create']"></button>
-						<button pButton pRipple label="Deletar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
+						<button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+						<button pButton pRipple label="Deletar selecionados" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedUsers()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
 					</div>
 				</ng-template>
 			</p-toolbar>
@@ -54,9 +54,9 @@
 							Email
 							<p-sortIcon field="email"></p-sortIcon>
 						</th>
-						<th pSortableColumn="active">
+						<th pSortableColumn="status">
 							Status
-							<p-sortIcon field="active"></p-sortIcon>
+							<p-sortIcon field="status"></p-sortIcon>
 						</th>
 						<th></th>
 					</tr>
@@ -78,12 +78,12 @@
 							{{ user.email }}
 						</td>
 						<td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
-							<span [class]="'product-badge status-' + (user.active ? 'active' : 'inactive')">{{ user.active ? 'ATIVO' : 'INATIVO' }}</span>
+							<span [class]="'status-badge status-' + (user.status === 'A' ? 'active' : 'inactive')">{{ user.status === 'A' ? 'ATIVO' : 'INATIVO' }}</span>
 						</td>
 						<td>
 							<div class="flex">
 								<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editUser(user)"></button>
-								<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteUser(user)"></button>
+								<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteUser(user)"></button>
 							</div>
 						</td>
 					</tr>

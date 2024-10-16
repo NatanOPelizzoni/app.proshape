@@ -7,37 +7,32 @@
 				</ng-template>
 				<ng-template pTemplate="right">
 					<div class="my-2">
-						{{ userForm.invalid | json }}
-						<button pButton pRipple label="Voltar" icon="pi pi-arrow-left" class="p-button-default mr-2" [routerLink]="['/app/user']"></button>
-						<button pButton pRipple label="Salvar" icon="pi pi-save" class="p-button-success" (click)="save()" ></button>
+						<button pButton pRipple label="Voltar" icon="pi pi-arrow-left" class="p-button-default mr-2" (click)="backToList($event)" ></button>
+						<button pButton pRipple label="Salvar" icon="pi pi-save" class="p-button-success" [disabled]="readonly && form.invalid" (click)="save()" ></button>
 					</div>
 				</ng-template>
 			</p-toolbar>
 
 			<div class="col-12">
-				<form [formGroup]="userForm">
+				<form [formGroup]="form">
 					<div class="card">
-						<h5>Usuário</h5>
+						<h5>{{ headerTitle }}</h5>
 						<div class="p-fluid p-formgrid grid">
-							<div class="field col-12 md:col-1">
-								<label htmlFor="id">ID</label>
-								<input formControlName="id" pInputText id="id" type="text" [readonly]="true" />
-							</div>
 							<div class="field col-12 md:col-6">
 								<label htmlFor="name">Nome *</label>
-								<input formControlName="name" pInputText id="name" type="text" />
+								<input [readonly]="readonly" [required]="true" formControlName="name" pInputText id="name" type="text" />
 							</div>
-							<div class="field col-12 md:col-5">
+							<div class="field col-12 md:col-6">
 								<label htmlFor="email">E-mail *</label>
-								<input formControlName="email" pInputText id="email" type="text" />
+								<input [readonly]="readonly" [required]="true" formControlName="email" pInputText id="email" type="text" />
 							</div>
 							<div class="field col-12 md:col-3">
-								<label htmlFor="active">Status *</label>
-								<p-dropdown formControlName="active" [options]="dropdownStatus" placeholder="Selecione um status" [showClear]="true" optionLabel="value"></p-dropdown>
+								<label htmlFor="status">Status *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="status" [options]="dropdownStatus" placeholder="Selecione um status" [showClear]="true" optionValue="value" optionLabel="description"></p-dropdown>
 							</div>
 							<div class="field col-12 md:col-3">
-								<label htmlFor="permission">Permissão *</label>
-								<p-dropdown formControlName="role" [options]="dropdownRoles" placeholder="Selecione uma permissão" [showClear]="true" optionLabel="value"></p-dropdown>
+								<label htmlFor="role_id">Permissão *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="role_id" [options]="dropdownRoles" placeholder="Selecione uma permissão" [showClear]="true" optionValue="value" optionLabel="description"></p-dropdown>
 							</div>
 						</div>
 					</div>
