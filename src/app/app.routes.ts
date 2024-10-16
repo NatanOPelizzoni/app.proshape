@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from "./modules/auth/login/login.component";
 import { LayoutComponent } from "./layouts/layout/layout.component";
 import { UserComponent } from "./modules/user/user.component";
+import { UserFormComponent } from "./modules/user/user-form/user-form.component";
 
 export const routes: Routes = [
 	{
@@ -15,6 +16,10 @@ export const routes: Routes = [
 			{
 				path: 'user',
 				component: UserComponent
+			},
+			{
+				path: 'user/create',
+				component: UserFormComponent
 			}
 		]
 	}

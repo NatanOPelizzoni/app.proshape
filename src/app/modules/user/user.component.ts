@@ -10,6 +10,7 @@ import { MessageService } from "primeng/api";
 import { InputTextModule } from "primeng/inputtext";
 import { DialogModule } from "primeng/dialog";
 import { NgIf } from "@angular/common";
+import { RouterLink } from "@angular/router";
 
 @Component({
 	selector: 'app-user',
@@ -22,9 +23,9 @@ import { NgIf } from "@angular/common";
 		TableModule,
 		InputTextModule,
 		DialogModule,
-		NgIf
+		NgIf,
+		RouterLink
 	],
-	providers: [MessageService],
 	templateUrl: './user.component.html',
 	styleUrl: './user.component.scss'
 })

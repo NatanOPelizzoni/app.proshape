@@ -4,8 +4,10 @@
 			<p-toast></p-toast>
 			<p-toolbar styleClass="mb-4">
 				<ng-template pTemplate="left">
+				</ng-template>
+				<ng-template pTemplate="right">
 					<div class="my-2">
-						<button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2"></button>
+						<button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" [routerLink]="['/app/user/create']"></button>
 						<button pButton pRipple label="Deletar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
 					</div>
 				</ng-template>
