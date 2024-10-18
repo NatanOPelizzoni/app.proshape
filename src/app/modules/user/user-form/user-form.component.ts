@@ -8,10 +8,14 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { DropdownModule } from "primeng/dropdown";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { JsonPipe } from "@angular/common";
+import { JsonPipe, NgIf } from "@angular/common";
 import { UserService } from "../user.service";
 import { HttpParams } from "@angular/common/http";
 import { Subscription } from "rxjs";
+import { PasswordModule } from "primeng/password";
+import { PasswordValidator } from "../../../shared/Validators/password-validator";
+import { DividerModule } from "primeng/divider";
+import { MessageService } from "primeng/api";
 
 @Component({
 	selector: 'app-user-form',
@@ -25,7 +29,10 @@ import { Subscription } from "rxjs";
 		InputTextareaModule,
 		DropdownModule,
 		ReactiveFormsModule,
-		JsonPipe
+		JsonPipe,
+		PasswordModule,
+		NgIf,
+		DividerModule
 	],
 	templateUrl: './user-form.component.html',
 	styleUrl: './user-form.component.scss'
@@ -55,6 +62,7 @@ export class UserFormComponent implements OnInit, OnDestroy, AfterContentInit {
 		private fb: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
+		private messageService: MessageService,
 		public userService: UserService,
 		public ref: ChangeDetectorRef,
 	) {
@@ -102,8 +110,12 @@ export class UserFormComponent implements OnInit, OnDestroy, AfterContentInit {
 			name: new FormControl(null, [Validators.required]),
 			email: new FormControl(null, [Validators.required]),
 			password: new FormControl(null, [Validators.required]),
+			password_confirmation: new FormControl(null, [Validators.required]),
 			status: new FormControl(null, [Validators.required]),
 			role_id: new FormControl(null, [Validators.required]),
+		},
+		{
+			validators: PasswordValidator.passwordsMatching
 		});
 	}
 
@@ -138,7 +150,6 @@ export class UserFormComponent implements OnInit, OnDestroy, AfterContentInit {
 		if (this.data === null || this.data === undefined) {
 			return;
 		}
-		console.log(this.data);
 
 		this.form.patchValue({
 			user_id: this.data.id,
@@ -152,16 +163,23 @@ export class UserFormComponent implements OnInit, OnDestroy, AfterContentInit {
 		this.ref.detectChanges();
 	}
 
-	backToList(event: MouseEvent) {
-		switch (event.type) {
-			case 'click':
-				this.router.navigate(['app/user']);
-				break;
+	save() {
+		if (this.form.invalid) {
+			return;
 		}
+
+		console.log(this.form.getRawValue());
+		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Usuário criado', life: 1000});
+		setTimeout(() => {
+			this.redirectToList();
+		}, 1000);
 	}
 
-	save() {
-		console.log(this.form.invalid)
-		console.log(this.form?.getRawValue());
+	redirectToList() {
+		this.router.navigate(['app/user']);
+	}
+
+	redirectToEdit() {
+		this.router.navigate(['app/user/' + this.id + '/update']);
 	}
 }
