@@ -30,18 +30,18 @@ export class MenuComponent implements OnInit {
 				label: 'Home',
 				visible: true,
 				items: [
-					{label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/app'], visible: true, isMaterialIcon: false}
+					{label: 'Dashboard', icon: 'home', routerLink: ['/app'], visible: true}
 				]
 			},
 			{
 				label: 'Cadastros',
 				visible: true,
 				items: [
-					{label: 'Usuários', icon: 'pi pi-fw pi-users', routerLink: ['/app/user'], visible: true, isMaterialIcon: false},
-					{label: 'Clientes', icon: 'pi pi-fw pi-address-book', routerLink: ['/app/client'], visible: true, isMaterialIcon: false},
-					{label: 'Grupo Muscular', icon: 'accessibility', routerLink: ['/app/body-group'], visible: true, isMaterialIcon: true},
-					{label: 'Exercício', icon: 'fitness_center', routerLink: ['/app/exercise'], visible: true, isMaterialIcon: true},
-					{label: 'Ficha de treino', icon: 'list_alt', routerLink: ['/app/training-sheet'], visible: true, isMaterialIcon: true},
+					{label: 'Usuários', icon: 'group', routerLink: ['/app/user'], visible: true},
+					{label: 'Clientes', icon: 'emoji_people', routerLink: ['/app/client'], visible: true},
+					{label: 'Grupo Muscular', icon: 'accessibility_new', routerLink: ['/app/body-group'], visible: true},
+					{label: 'Exercício', icon: 'fitness_center', routerLink: ['/app/exercise'], visible: true},
+					{label: 'Ficha de treino', icon: 'receipt_long', routerLink: ['/app/training-sheet'], visible: true},
 				]
 			}
 		];
