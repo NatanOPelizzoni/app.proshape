@@ -1,0 +1,58 @@
+{
+	"data": [
+		{
+			"id": 1,
+			"name": "Natan O Pelizzoni",
+			"email": "natan@email.com",
+			"status": "A",
+			"birth_date": "2001-01-24",
+			"weight": 73,
+			"height": 1.87,
+			"fitness_goals": "Hipertrofia e definição",
+			"training_frequency": 5,
+			"health_restrictions": null,
+			"preferred_workout_type": "Musculação",
+			"exercise_history": "Treino a 5 anos, mas com interrupções",
+			"current_fitness_level": "Iniciante para intermediário",
+			"injuries_or_surgeries": "Nenhuma",
+			"instructor_id": 2,
+			"user_id": 42
+		},
+		{
+			"id": 2,
+			"name": "Jane Doe",
+			"email": "janedoe@email.com",
+			"status": "A",
+			"birth_date": "1990-05-15",
+			"weight": 65,
+			"height": 170,
+			"fitness_goals": "Perda de peso e tonificação",
+			"training_frequency": 3,
+			"health_restrictions": "Nenhuma",
+			"preferred_workout_type": "Yoga",
+			"exercise_history": "Pratica exercícios regularmente há 2 anos",
+			"current_fitness_level": "Intermediário",
+			"injuries_or_surgeries": "Cirurgia no joelho em 2018",
+			"instructor_id": 3,
+			"user_id": 43
+		},
+		{
+			"id": 3,
+			"name": "John Doe",
+			"email": "johndoe@email.com",
+			"status": "A",
+			"birth_date": "1985-08-20",
+			"weight": 80.7,
+			"height": 180,
+			"fitness_goals": "Ganho de massa muscular",
+			"training_frequency": 4,
+			"health_restrictions": "Nenhuma",
+			"preferred_workout_type": "CrossFit",
+			"exercise_history": "Treina regularmente há 3 anos",
+			"current_fitness_level": "Intermediário",
+			"injuries_or_surgeries": "Lesão no ombro em 2020",
+			"instructor_id": 5,
+			"user_id": 44
+		}
+	]
+}

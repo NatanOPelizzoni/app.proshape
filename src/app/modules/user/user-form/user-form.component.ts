@@ -44,9 +44,9 @@ export class UserFormComponent implements OnInit, OnDestroy, AfterContentInit {
 	];
 
 	dropdownRoles = [
-		{value: 1, description: 'Admin'},
-		{value: 2, description: 'Instrutor'},
-		{value: 3, description: 'Cliente'}
+		{value: 'A', description: 'Admin'},
+		{value: 'I', description: 'Instrutor'},
+		{value: 'C', description: 'Cliente'}
 	];
 
 	id: number | null = null;
@@ -106,17 +106,17 @@ export class UserFormComponent implements OnInit, OnDestroy, AfterContentInit {
 
 	private _createForm() {
 		this.form = this.fb.group({
-			id: new FormControl(this.id),
-			name: new FormControl(null, [Validators.required]),
-			email: new FormControl(null, [Validators.required]),
-			password: new FormControl(null, [Validators.required]),
-			password_confirmation: new FormControl(null, [Validators.required]),
-			status: new FormControl(null, [Validators.required]),
-			role_id: new FormControl(null, [Validators.required]),
-		},
-		{
-			validators: PasswordValidator.passwordsMatching
-		});
+				id: new FormControl(this.id),
+				name: new FormControl(null, [Validators.required]),
+				email: new FormControl(null, [Validators.required]),
+				password: new FormControl(null, [Validators.required]),
+				password_confirmation: new FormControl(null, [Validators.required]),
+				status: new FormControl(null, [Validators.required]),
+				role: new FormControl(null, [Validators.required]),
+			},
+			{
+				validators: PasswordValidator.passwordsMatching
+			});
 	}
 
 	private _setReadonly() {
@@ -157,7 +157,7 @@ export class UserFormComponent implements OnInit, OnDestroy, AfterContentInit {
 			email: this.data.email,
 			password: this.data.password,
 			status: this.data.status,
-			role_id: this.data.role_id,
+			role: this.data.role,
 		});
 
 		this.ref.detectChanges();

@@ -1,0 +1,207 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card px-6 py-6">
+			<p-toast></p-toast>
+			<p-toolbar styleClass="mb-4">
+				<ng-template pTemplate="left">
+				</ng-template>
+				<ng-template pTemplate="right">
+					<div class="my-2">
+						<button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+						<button pButton pRipple label="Deletar selecionados" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedClients()" [disabled]="!selectedClients || !selectedClients.length"></button>
+					</div>
+				</ng-template>
+			</p-toolbar>
+
+			<p-table #dt
+					 [value]="clients"
+					 [columns]="cols"
+					 responsiveLayout="scroll"
+					 [rows]="10"
+					 [globalFilterFields]="['id','name','email', 'status','birth_date','weight','height','fitness_goals','training_frequency','health_restrictions','preferred_workout_type','exercise_history','current_fitness_level','injuries_or_surgeries','instructor_id']"
+					 [paginator]="true"
+					 [rowsPerPageOptions]="rowsPerPageOptions"
+					 [showCurrentPageReport]="true"
+					 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+					 [(selection)]="selectedClients"
+					 selectionMode="multiple"
+					 [rowHover]="true"
+					 dataKey="id"
+			>
+				<ng-template pTemplate="caption">
+					<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+						<h5 class="m-0">Clientes</h5>
+						<span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." class="w-full sm:w-auto"/>
+                        </span>
+					</div>
+				</ng-template>
+				<ng-template pTemplate="header">
+					<tr>
+						<th style="width: 3rem">
+							<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+						</th>
+						<th pSortableColumn="id">
+							ID
+							<p-sortIcon field="id"></p-sortIcon>
+						</th>
+						<th pSortableColumn="name">
+							Nome
+							<p-sortIcon field="name"></p-sortIcon>
+						</th>
+						<th pSortableColumn="email">
+							Email
+							<p-sortIcon field="email"></p-sortIcon>
+						</th>
+						<th pSortableColumn="status">
+							Status
+							<p-sortIcon field="status"></p-sortIcon>
+						</th>
+						<th pSortableColumn="birth_date">
+							Data de Nascimento
+							<p-sortIcon field="birth_date"></p-sortIcon>
+						</th>
+						<th pSortableColumn="weight">
+							Peso
+							<p-sortIcon field="weight"></p-sortIcon>
+						</th>
+						<th pSortableColumn="height">
+							Altura
+							<p-sortIcon field="height"></p-sortIcon>
+						</th>
+						<th pSortableColumn="fitness_goals">
+							Objetivos
+							<p-sortIcon field="fitness_goals"></p-sortIcon>
+						</th>
+						<th pSortableColumn="training_frequency">
+							Frequência de Treino
+							<p-sortIcon field="training_frequency"></p-sortIcon>
+						</th>
+						<th pSortableColumn="health_restrictions">
+							Restrições de Saúde
+							<p-sortIcon field="health_restrictions"></p-sortIcon>
+						</th>
+						<th pSortableColumn="preferred_workout_type">
+							Tipo de Treino Preferido
+							<p-sortIcon field="preferred_workout_type"></p-sortIcon>
+						</th>
+						<th pSortableColumn="exercise_history">
+							Histórico de Exercícios
+							<p-sortIcon field="exercise_history"></p-sortIcon>
+						</th>
+						<th pSortableColumn="current_fitness_level">
+							Nível de Fitness Atual
+							<p-sortIcon field="current_fitness_level"></p-sortIcon>
+						</th>
+						<th pSortableColumn="injuries_or_surgeries">
+							Lesões ou Cirurgias
+							<p-sortIcon field="injuries_or_surgeries"></p-sortIcon>
+						</th>
+						<th pSortableColumn="instructor_id">
+							Instrutor
+							<p-sortIcon field="instructor_id"></p-sortIcon>
+						</th>
+						<th></th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-client>
+					<tr>
+						<td>
+							<p-tableCheckbox [value]="client"></p-tableCheckbox>
+						</td>
+						<td style="width:5%; min-width:5rem;">
+							<span class="p-column-title">ID</span>
+							{{ client.id }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Nome</span>
+							{{ client.name }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Email</span>
+							{{ client.email }}
+						</td>
+						<td style="width:14%; min-width: 10rem;">
+							<span class="p-column-title">Status</span>
+							<span [class]="'status-badge status-' + (client.status === 'A' ? 'active' : 'inactive')">{{ client.status === 'A' ? 'ATIVO' : 'INATIVO' }}</span>
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Data de Nascimento</span>
+							{{ client.birth_date }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Peso</span>
+							{{ client.weight }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Altura</span>
+							{{ client.height }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Objetivos</span>
+							{{ client.fitness_goals }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Frequência de Treino</span>
+							{{ client.training_frequency }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Restrições de Saúde</span>
+							{{ client.health_restrictions }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Tipo de Treino Preferido</span>
+							{{ client.preferred_workout_type }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Histórico de Exercícios</span>
+							{{ client.exercise_history }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Nível de Fitness Atual</span>
+							{{ client.current_fitness_level }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Lesões ou Cirurgias</span>
+							{{ client.injuries_or_surgeries }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Instrutor</span>
+							{{ this.getInstructor(client.instructor_id) }}
+						</td>
+						<td>
+							<div class="flex">
+								<button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-default mr-2" (click)="viewClient(client)"></button>
+								<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editClient(client)"></button>
+								<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteClient(client)"></button>
+							</div>
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+
+		<p-dialog [(visible)]="deleteClientDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+			<div class="flex align-items-center justify-content-center">
+				<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+				<span *ngIf="client"> Tem certeza de que deseja excluir <b>{{client.name}}</b>?</span>
+			</div>
+			<ng-template pTemplate="footer">
+				<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteClientDialog = false"></button>
+				<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDelete()"></button>
+			</ng-template>
+		</p-dialog>
+
+		<p-dialog [(visible)]="deleteClientsDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+			<div class="flex align-items-center justify-content-center">
+				<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+				<span>Tem certeza de que deseja excluir os usuários selecionados?</span>
+			</div>
+			<ng-template pTemplate="footer">
+				<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteClientsDialog = false"></button>
+				<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDeleteSelected()"></button>
+			</ng-template>
+		</p-dialog>
+	</div>
+</div>

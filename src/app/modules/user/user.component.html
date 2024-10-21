@@ -18,7 +18,7 @@
 				[columns]="cols"
 				responsiveLayout="scroll"
 				[rows]="10"
-				[globalFilterFields]="['id','name','email','status']"
+				[globalFilterFields]="['id','name','email','role','status']"
 				[paginator]="true"
 				[rowsPerPageOptions]="rowsPerPageOptions"
 				[showCurrentPageReport]="true"
@@ -54,6 +54,10 @@
 							Email
 							<p-sortIcon field="email"></p-sortIcon>
 						</th>
+						<th pSortableColumn="role">
+							Perfil
+							<p-sortIcon field="role"></p-sortIcon>
+						</th>
 						<th pSortableColumn="status">
 							Status
 							<p-sortIcon field="status"></p-sortIcon>
@@ -66,22 +70,29 @@
 						<td>
 							<p-tableCheckbox [value]="user"></p-tableCheckbox>
 						</td>
-						<td style="width:14%; min-width:10rem;"><span class="p-column-title">ID</span>
+						<td style="width:5%; min-width:5rem;">
+							<span class="p-column-title">ID</span>
 							{{ user.id }}
 						</td>
 						<td style="width:14%; min-width:10rem;">
-							<span class="p-column-title">Name</span>
+							<span class="p-column-title">Nome</span>
 							{{ user.name }}
 						</td>
 						<td style="width:14%; min-width:10rem;">
 							<span class="p-column-title">Email</span>
 							{{ user.email }}
 						</td>
-						<td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Perfil</span>
+							{{ getRoleDescription(user.role) }}
+						</td>
+						<td style="width:14%; min-width: 10rem;">
+							<span class="p-column-title">Status</span>
 							<span [class]="'status-badge status-' + (user.status === 'A' ? 'active' : 'inactive')">{{ user.status === 'A' ? 'ATIVO' : 'INATIVO' }}</span>
 						</td>
 						<td>
 							<div class="flex">
+								<button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-default mr-2" (click)="viewUser(user)"></button>
 								<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editUser(user)"></button>
 								<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteUser(user)"></button>
 							</div>

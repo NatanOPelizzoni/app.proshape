@@ -30,6 +30,12 @@ import { Router } from "@angular/router";
 })
 export class UserComponent implements OnInit {
 
+	roles = [
+		{value: 'A', description: 'ADMIN'},
+		{value: 'I', description: 'INSTRUTOR'},
+		{value: 'C', description: 'CLIENTE'}
+	];
+
 	deleteUserDialog: boolean = false;
 
 	deleteUsersDialog: boolean = false;
@@ -54,13 +60,14 @@ export class UserComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.userService.getAll().then(data => this.users = data);
+		this.userService.getAll().subscribe((data: User[]) => this.users = data);
 
 		this.cols = [
 			{field: 'id', header: 'ID'},
 			{field: 'name', header: 'Nome'},
 			{field: 'email', header: 'Email'},
-			{field: 'status', header: 'Status'}
+			{field: 'role', header: 'Perfil'},
+			{field: 'status', header: 'Status'},
 		];
 	}
 
@@ -71,6 +78,11 @@ export class UserComponent implements OnInit {
 	editUser(user: User) {
 		this.user = {...user};
 		this.router.navigate([`app/user/${user.id}/update`]);
+	}
+
+	viewUser(user: User) {
+		this.user = {...user};
+		this.router.navigate([`app/user/${user.id}/view`]);
 	}
 
 	deleteUser(user: User) {
@@ -94,6 +106,13 @@ export class UserComponent implements OnInit {
 		this.users = this.users.filter(val => !this.selectedUsers.includes(val));
 		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Usuários Deletados', life: 3000});
 		this.selectedUsers = [];
+	}
+
+	getRoleDescription(roleValue: string): string {
+		// TODO: AJEITAR ESSA FUNÇÃO PARA QUE TRAGA A DESCRIÇÃO DO ROLE DIRETO NA REQUEST
+		//  // POIS ASSIM COMO TA EXECUTA VARIAS VEZES POR ESTAR SENDO CHAMADO DENTRO DO HTML
+		const role = this.roles.find(val => val.value === roleValue);
+		return role ? role.description : '';
 	}
 
 	onGlobalFilter(table: Table, event: Event) {
