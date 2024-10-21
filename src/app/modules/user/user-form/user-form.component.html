@@ -1,0 +1,101 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card px-6 py-6">
+			<p-toast></p-toast>
+			<p-toolbar styleClass="mb-4">
+				<ng-template pTemplate="left">
+				</ng-template>
+				<ng-template pTemplate="right">
+					<div class="my-2">
+						<button pButton pRipple label="Voltar" icon="pi pi-arrow-left" class="p-button-default mr-2" (click)="redirectToList()" ></button>
+						<button *ngIf="!readonly" pButton pRipple label="Salvar" icon="pi pi-save" class="p-button-success" [disabled]="form.invalid" (click)="save()" ></button>
+						<button *ngIf="readonly" pButton pRipple label="Editar" icon="pi pi-pencil" class="p-button-warning" [disabled]="!readonly" (click)="redirectToEdit()" ></button>
+					</div>
+				</ng-template>
+			</p-toolbar>
+
+			<div class="col-12">
+				<form [formGroup]="form">
+					<div class="card">
+						<h5>{{ headerTitle }}</h5>
+						<div class="p-fluid p-formgrid grid">
+							<div class="field col-12 md:col-6"> <!-- NAME -->
+								<label htmlFor="name">Nome *</label>
+								<input [readonly]="readonly" [required]="true" formControlName="name" pInputText id="name" type="text" />
+								<small class="p-error block"
+									   *ngIf="form.get('name')?.invalid && form.get('name')?.dirty"
+								>
+									Nome é obrigatório!
+								</small>
+							</div> <!-- NAME -->
+							<div class="field col-12 md:col-6"> <!-- EMAIL -->
+								<label htmlFor="email">E-mail *</label>
+								<input [readonly]="readonly" [required]="true" formControlName="email" pInputText id="email" type="text" />
+								<small class="p-error block"
+									   *ngIf="form.get('email')?.invalid && form.get('email')?.dirty"
+								>
+									E-mail é obrigatório!
+								</small>
+							</div> <!-- EMAIL -->
+							<div *ngIf="actionType === 'create'" class="field col-12 md:col-3"> <!-- PASSWORD -->
+								<label htmlFor="password">Senha *</label>
+								<p-password id="password" formControlName="password" placeholder="Senha" [toggleMask]="true" [showClear]="true" [weakLabel]="'Fraca'" [mediumLabel]="'Média'" [strongLabel]="'Forte'">
+									<ng-template pTemplate="header">
+										<h6>Escolha uma senha</h6>
+									</ng-template>
+									<ng-template pTemplate="footer">
+										<p-divider />
+										<p class="mt-2">Sugestões</p>
+										<ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+											<li>Pelo menos uma letra minúscula</li>
+											<li>Pelo menos uma letra maiúscula</li>
+											<li>Pelo menos um numérico</li>
+											<li>Mínimo 8 caracteres</li>
+										</ul>
+									</ng-template>
+								</p-password>
+								<small class="p-error block"
+									   *ngIf="form.get('password')?.invalid && form.get('password')?.dirty"
+								>
+									Senha é obrigatória!
+								</small>
+							</div> <!-- PASSWORD -->
+							<div *ngIf="actionType === 'create'" class="field col-12 md:col-3"> <!-- PASSWORD CONFIRMATION -->
+								<label htmlFor="password_confirmation">Confirmação Senha *</label>
+								<p-password id="password_confirmation" formControlName="password_confirmation" placeholder="Confirmação Senha" [toggleMask]="true" [feedback]="false" [showClear]="true"></p-password>
+								<small class="p-error block"
+									   *ngIf="form.get('password_confirmation')?.invalid && form.get('password_confirmation')?.dirty"
+								>
+									Confirmação senha é obrigatória!
+								</small>
+								<small class="p-error block"
+									   *ngIf="form.get('password_confirmation')?.dirty && form.hasError('passwordsNotMatching')"
+								>
+									As senhas não correspondem!
+								</small>
+							</div> <!-- PASSWORD CONFIRMATION -->
+							<div class="field col-12 md:col-3"> <!-- STATUS -->
+								<label htmlFor="status">Status *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="status" [options]="dropdownStatus" placeholder="Selecione um status" [showClear]="true" optionValue="value" optionLabel="description"></p-dropdown>
+								<small class="p-error block"
+									   *ngIf="form.get('status')?.invalid && form.get('status')?.dirty"
+								>
+									Status é obrigatório!
+								</small>
+							</div> <!-- STATUS -->
+							<div class="field col-12 md:col-3"> <!-- ROLE -->
+								<label htmlFor="role">Perfil *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="role" [options]="dropdownRoles" placeholder="Selecione um perfil" [showClear]="true" optionValue="value" optionLabel="description"></p-dropdown>
+								<small class="p-error block"
+									   *ngIf="form.get('role')?.invalid && form.get('role')?.dirty"
+								>
+									Perfil é obrigatório!
+								</small>
+							</div> <!-- ROLE -->
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

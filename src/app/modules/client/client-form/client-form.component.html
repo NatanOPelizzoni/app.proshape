@@ -1,0 +1,144 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card px-6 py-6">
+			<p-toast></p-toast>
+			<p-toolbar styleClass="mb-4">
+				<ng-template pTemplate="left">
+				</ng-template>
+				<ng-template pTemplate="right">
+					<div class="my-2">
+						<button pButton pRipple label="Voltar" icon="pi pi-arrow-left" class="p-button-default mr-2" (click)="redirectToList()" ></button>
+						<button *ngIf="!readonly" pButton pRipple label="Salvar" icon="pi pi-save" class="p-button-success" [disabled]="form.invalid" (click)="save()" ></button>
+						<button *ngIf="readonly" pButton pRipple label="Editar" icon="pi pi-pencil" class="p-button-warning" [disabled]="!readonly" (click)="redirectToEdit()" ></button>
+					</div>
+				</ng-template>
+			</p-toolbar>
+
+			<div class="col-12">
+				<form [formGroup]="form">
+					<div class="card">
+						<h5>{{ headerTitle }}</h5>
+						<div class="p-fluid p-formgrid grid">
+							<div class="field col-12 md:col-6"> <!-- NAME -->
+								<label htmlFor="name">Nome *</label>
+								<input [readonly]="readonly" [required]="true" formControlName="name" pInputText id="name" type="text" />
+								<small class="p-error block"
+									   *ngIf="form.get('name')?.invalid && form.get('name')?.dirty"
+								>
+									Nome é obrigatório!
+								</small>
+							</div> <!-- NAME -->
+							<div class="field col-12 md:col-6">  <!-- EMAIL -->
+								<label htmlFor="email">Email *</label>
+								<input [readonly]="readonly" [required]="true" formControlName="email" pInputText id="email" type="text" />
+								<small class="p-error block"
+									   *ngIf="form.get('email')?.invalid && form.get('email')?.dirty"
+								>
+									Email é obrigatório!
+								</small>
+							</div> <!-- EMAIL -->
+							<div class="field col-12 md:col-3"> <!-- STATUS -->
+								<label htmlFor="status">Status *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="status" [options]="dropdownStatus" placeholder="Selecione um status" [showClear]="true" optionValue="value" optionLabel="description"></p-dropdown>
+								<small class="p-error block"
+									   *ngIf="form.get('status')?.invalid && form.get('status')?.dirty"
+								>
+									Status é obrigatório!
+								</small>
+							</div> <!-- STATUS -->
+							<div class="field col-12 md:col-3"> <!-- BIRTH DATE -->
+								<label htmlFor="birth_date">Data de nascimento *</label>
+								<p-calendar [readonlyInput]="readonly" [required]="true" [dateFormat]="'dd/mm/yy'" [showClear]="true" formControlName="birth_date" id="birth_date" />
+								<small class="p-error block"
+									   *ngIf="form.get('birth_date')?.invalid && form.get('birth_date')?.dirty"
+								>
+									Data de nascimento é obrigatório!
+								</small>
+							</div> <!-- BIRTH DATE -->
+							<div class="field col-12 md:col-3">  <!-- WEIGHT -->
+								<label htmlFor="weight">Peso *</label>
+								<p-inputNumber [readonly]="readonly" [required]="true" formControlName="weight" id="weight" mode="decimal" [maxFractionDigits]="2" />
+								<small class="p-error block"
+									   *ngIf="form.get('weight')?.invalid && form.get('weight')?.dirty"
+								>
+									Peso é obrigatório!
+								</small>
+							</div> <!-- WEIGHT -->
+							<div class="field col-12 md:col-3">  <!-- HEIGHT -->
+								<label htmlFor="height">Altura *</label>
+								<p-inputNumber [readonly]="readonly" [required]="true" formControlName="height" id="height" mode="decimal" [maxFractionDigits]="2" />
+								<small class="p-error block"
+									   *ngIf="form.get('height')?.invalid && form.get('height')?.dirty"
+								>
+									Altura é obrigatório!
+								</small>
+							</div> <!-- HEIGHT -->
+							<div class="field col-12 md:col-6"> <!-- FITNESS GOALS -->
+								<label htmlFor="fitness_goals">Objetivos *</label>
+								<input [readonly]="readonly" [required]="true" formControlName="fitness_goals" pInputText id="fitness_goals" type="text" />
+								<small class="p-error block"
+									   *ngIf="form.get('fitness_goals')?.invalid && form.get('fitness_goals')?.dirty"
+								>
+									Objetivos é obrigatório!
+								</small>
+							</div> <!-- FITNESS GOALS -->
+							<div class="field col-12 md:col-6"> <!-- PREFERRED WORKOUT TYPE -->
+								<label htmlFor="preferred_workout_type">Tipo de Treino Preferido *</label>
+								<input [readonly]="readonly" [required]="true" formControlName="preferred_workout_type" pInputText id="preferred_workout_type" type="text" />
+								<small class="p-error block"
+									   *ngIf="form.get('preferred_workout_type')?.invalid && form.get('preferred_workout_type')?.dirty"
+								>
+									Tipo de Treino Preferido é obrigatório!
+								</small>
+							</div> <!-- PREFERRED WORKOUT TYPE -->
+							<div class="field col-12 md:col-6"> <!-- EXERCISE HISTORY -->
+								<label htmlFor="exercise_history">Histórico de Exercícios *</label>
+								<input [readonly]="readonly" [required]="true" formControlName="exercise_history" pInputText id="exercise_history" type="text" />
+								<small class="p-error block"
+									   *ngIf="form.get('exercise_history')?.invalid && form.get('exercise_history')?.dirty"
+								>
+									Histórico de Exercícios é obrigatório!
+								</small>
+							</div> <!-- EXERCISE HISTORY -->
+							<div class="field col-12 md:col-6"> <!-- CURRENT FITNESS LEVEL -->
+								<label htmlFor="current_fitness_level">Nível de Fitness Atual *</label>
+								<input [readonly]="readonly" [required]="true" formControlName="current_fitness_level" pInputText id="current_fitness_level" type="text" />
+								<small class="p-error block"
+									   *ngIf="form.get('current_fitness_level')?.invalid && form.get('current_fitness_level')?.dirty"
+								>
+									Nível de Fitness Atual é obrigatório!
+								</small>
+							</div> <!-- CURRENT FITNESS LEVEL -->
+							<div class="field col-12 md:col-6"> <!-- INJURIES OR SURGERIES -->
+								<label htmlFor="injuries_or_surgeries">Lesões ou Cirurgias</label>
+								<input [readonly]="readonly" formControlName="injuries_or_surgeries" pInputText id="injuries_or_surgeries" type="text" />
+							</div> <!-- INJURIES OR SURGERIES -->
+							<div class="field col-12 md:col-6"> <!-- HEALTH RESTRICTION -->
+								<label htmlFor="health_restrictions">Restrições de Saúde</label>
+								<input [readonly]="readonly" formControlName="health_restrictions" pInputText id="health_restrictions" type="text" />
+							</div> <!-- HEALTH RESTRICTION -->
+							<div class="field col-12 md:col-3">  <!-- TRAINING FREQUENCY -->
+								<label htmlFor="training_frequency">Frequência de Treino *</label>
+								<p-inputNumber [readonly]="readonly" [required]="true" formControlName="training_frequency" id="training_frequency" mode="decimal" [showButtons]="true" [buttonLayout]="'stacked'" [min]="1" [max]="7" />
+								<small class="p-error block"
+									   *ngIf="form.get('training_frequency')?.invalid && form.get('training_frequency')?.dirty"
+								>
+									Frequência de Treino é obrigatório!
+								</small>
+							</div> <!-- TRAINING FREQUENCY -->
+							<div class="field col-12 md:col-3"> <!-- INSTRUCTOR -->
+								<label htmlFor="instructor_id">Instrutor *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="instructor_id" [options]="dropdownInstructors" placeholder="Selecione um instrutor" [showClear]="true" [filter]="true" [filterBy]="'description'" optionValue="value" optionLabel="description"></p-dropdown>
+								<small class="p-error block"
+									   *ngIf="form.get('instructor_id')?.invalid && form.get('instructor_id')?.dirty"
+								>
+									Instrutor é obrigatório!
+								</small>
+							</div> <!-- INSTRUCTOR -->
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
