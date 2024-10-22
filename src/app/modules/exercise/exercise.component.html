@@ -1,0 +1,119 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card px-6 py-6">
+			<p-toast></p-toast>
+			<p-toolbar styleClass="mb-4">
+				<ng-template pTemplate="left">
+				</ng-template>
+				<ng-template pTemplate="right">
+					<div class="my-2">
+						<button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+						<button pButton pRipple label="Deletar selecionados" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedExercises()" [disabled]="!selectedExercises || !selectedExercises.length"></button>
+					</div>
+				</ng-template>
+			</p-toolbar>
+
+			<p-table #dt
+					 [value]="exercises"
+					 [columns]="cols"
+					 responsiveLayout="scroll"
+					 [rows]="10"
+					 [globalFilterFields]="['id','name','bodyGroup','status','body_group_description']"
+					 [paginator]="true"
+					 [rowsPerPageOptions]="rowsPerPageOptions"
+					 [showCurrentPageReport]="true"
+					 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+					 [(selection)]="selectedExercises"
+					 selectionMode="multiple"
+					 [rowHover]="true"
+					 dataKey="id"
+			>
+				<ng-template pTemplate="caption">
+					<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+						<h5 class="m-0">Exercícios</h5>
+						<span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." class="w-full sm:w-auto"/>
+                        </span>
+					</div>
+				</ng-template>
+				<ng-template pTemplate="header">
+					<tr>
+						<th style="width: 3rem">
+							<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+						</th>
+						<th pSortableColumn="id">
+							ID
+							<p-sortIcon field="id"></p-sortIcon>
+						</th>
+						<th pSortableColumn="name">
+							Nome
+							<p-sortIcon field="name"></p-sortIcon>
+						</th>
+						<th pSortableColumn="bodyGroup">
+							Grupo Muscular
+							<p-sortIcon field="bodyGroup"></p-sortIcon>
+						</th>
+						<th pSortableColumn="status">
+							Status
+							<p-sortIcon field="status"></p-sortIcon>
+						</th>
+						<th></th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-exercise>
+					<tr>
+						<td>
+							<p-tableCheckbox [value]="exercise"></p-tableCheckbox>
+						</td>
+						<td style="width:5%; min-width:5rem;">
+							<span class="p-column-title">ID</span>
+							{{ exercise.id }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Nome</span>
+							{{ exercise.name }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Grupo Musuclar</span>
+							{{ exercise.body_group_description }}
+						</td>
+						<td style="width:14%; min-width: 10rem;">
+							<span class="p-column-title">Status</span>
+							<span [class]="'status-badge status-' + (exercise.status === 'A' ? 'active' : 'inactive')">{{ exercise.status === 'A' ? 'ATIVO' : 'INATIVO' }}</span>
+						</td>
+						<td>
+							<div class="flex">
+								<button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-default mr-2" (click)="viewExercise(exercise)"></button>
+								<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editExercise(exercise)"></button>
+								<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteExercise(exercise)"></button>
+							</div>
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+
+		<p-dialog [(visible)]="deleteExerciseDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+			<div class="flex align-items-center justify-content-center">
+				<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+				<span *ngIf="exercise"> Tem certeza de que deseja excluir <b>{{exercise.name}}</b>?</span>
+			</div>
+			<ng-template pTemplate="footer">
+				<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteExerciseDialog = false"></button>
+				<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDelete()"></button>
+			</ng-template>
+		</p-dialog>
+
+		<p-dialog [(visible)]="deleteExercisesDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+			<div class="flex align-items-center justify-content-center">
+				<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+				<span>Tem certeza de que deseja excluir os exercícios selecionados?</span>
+			</div>
+			<ng-template pTemplate="footer">
+				<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteExercisesDialog = false"></button>
+				<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDeleteSelected()"></button>
+			</ng-template>
+		</p-dialog>
+	</div>
+</div>
