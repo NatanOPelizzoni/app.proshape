@@ -6,6 +6,7 @@ import { UserFormComponent } from "./modules/user/user-form/user-form.component"
 import { ClientComponent } from "./modules/client/client.component";
 import { ClientFormComponent } from "./modules/client/client-form/client-form.component";
 import { BodyGroupComponent } from "./modules/body-group/body-group.component";
+import { BodyGroupFormComponent } from "./modules/body-group/body-group-form/body-group-form.component";
 
 export const routes: Routes = [
 	{
@@ -59,15 +60,15 @@ export const routes: Routes = [
 			},
 			{
 				path: 'body-group/create',
-				component: ClientFormComponent
+				component: BodyGroupFormComponent
 			},
 			{
 				path: 'body-group/:id/update',
-				component: ClientFormComponent
+				component: BodyGroupFormComponent
 			},
 			{
 				path: 'body-group/:id/view',
-				component: ClientFormComponent
+				component: BodyGroupFormComponent
 			},
 		]
 	}

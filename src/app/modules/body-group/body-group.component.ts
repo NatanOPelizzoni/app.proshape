@@ -97,7 +97,7 @@ export class BodyGroupComponent implements OnInit {
 	confirmDeleteSelected() {
 		this.deleteBodyGroupsDialog = false;
 		this.bodyGroups = this.bodyGroups.filter(val => !this.selectedBodyGroups.includes(val));
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Grupos Musculares Deletados', life: 3000});
+		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Grupos musculares deletados', life: 3000});
 		this.selectedBodyGroups = [];
 	}
 
