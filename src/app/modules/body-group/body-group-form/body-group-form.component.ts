@@ -17,8 +17,8 @@ import { ToolbarModule } from "primeng/toolbar";
 import { BodyGroupService } from "../body-group.service";
 
 @Component({
-  selector: 'app-body-group-form',
-  standalone: true,
+	selector: 'app-body-group-form',
+	standalone: true,
 	imports: [
 		ButtonDirective,
 		DividerModule,
@@ -32,8 +32,8 @@ import { BodyGroupService } from "../body-group.service";
 		ToastModule,
 		ToolbarModule
 	],
-  templateUrl: './body-group-form.component.html',
-  styleUrl: './body-group-form.component.scss'
+	templateUrl: './body-group-form.component.html',
+	styleUrl: './body-group-form.component.scss'
 })
 export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentInit {
 	dropdownStatus = [
@@ -104,10 +104,10 @@ export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentIn
 
 	private _createForm() {
 		this.form = this.fb.group({
-				id: new FormControl(this.id),
-				name: new FormControl(null, [Validators.required]),
-				status: new FormControl(null, [Validators.required]),
-			});
+			id: new FormControl(this.id),
+			name: new FormControl(null, [Validators.required]),
+			status: new FormControl(null, [Validators.required]),
+		});
 	}
 
 	private _setReadonly() {
