@@ -114,7 +114,7 @@ export class LayoutService {
 	}
 
 	onConfigUpdate() {
-		this._config = { ...this.config() };
+		this._config = {...this.config()};
 		this.configUpdate.next(this.config());
 	}
 
@@ -135,6 +135,7 @@ export class LayoutService {
 
 		this.replaceThemeLink(newHref);
 	}
+
 	replaceThemeLink(href: string) {
 		const id = 'theme-css';
 		let themeLink = <HTMLLinkElement>document.getElementById(id);

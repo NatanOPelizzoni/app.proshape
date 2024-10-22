@@ -121,7 +121,7 @@ export class ClientComponent implements OnInit, OnDestroy {
 	confirmDeleteSelected() {
 		this.deleteClientsDialog = false;
 		this.clients = this.clients.filter(val => !this.selectedClients.includes(val));
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Clientes Deletados', life: 3000});
+		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Clientes deletados', life: 3000});
 		this.selectedClients = [];
 	}
 

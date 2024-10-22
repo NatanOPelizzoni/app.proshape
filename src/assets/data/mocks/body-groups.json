@@ -1,0 +1,44 @@
+{
+	"data": [
+		{
+			"id": 1,
+			"name": "Peito",
+			"status": "A"
+		},
+		{
+			"id": 2,
+			"name": "Costas",
+			"status": "A"
+		},
+		{
+			"id": 3,
+			"name": "Ombros",
+			"status": "A"
+		},
+		{
+			"id": 4,
+			"name": "Bíceps",
+			"status": "A"
+		},
+		{
+			"id": 5,
+			"name": "Tríceps",
+			"status": "A"
+		},
+		{
+			"id": 6,
+			"name": "Pernas",
+			"status": "A"
+		},
+		{
+			"id": 7,
+			"name": "Glúteos",
+			"status": "A"
+		},
+		{
+			"id": 8,
+			"name": "Grupo Muscular 1",
+			"status": "I"
+		}
+	]
+}

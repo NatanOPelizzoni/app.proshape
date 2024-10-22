@@ -5,6 +5,8 @@ import { UserComponent } from "./modules/user/user.component";
 import { UserFormComponent } from "./modules/user/user-form/user-form.component";
 import { ClientComponent } from "./modules/client/client.component";
 import { ClientFormComponent } from "./modules/client/client-form/client-form.component";
+import { BodyGroupComponent } from "./modules/body-group/body-group.component";
+import { BodyGroupFormComponent } from "./modules/body-group/body-group-form/body-group-form.component";
 
 export const routes: Routes = [
 	{
@@ -49,6 +51,24 @@ export const routes: Routes = [
 			{
 				path: 'client/:id/view',
 				component: ClientFormComponent
+			},
+
+			// Body Group routes
+			{
+				path: 'body-group',
+				component: BodyGroupComponent
+			},
+			{
+				path: 'body-group/create',
+				component: BodyGroupFormComponent
+			},
+			{
+				path: 'body-group/:id/update',
+				component: BodyGroupFormComponent
+			},
+			{
+				path: 'body-group/:id/view',
+				component: BodyGroupFormComponent
 			},
 		]
 	}
