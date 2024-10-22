@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MessageService, PrimeTemplate } from "primeng/api";
-import { PasswordValidator } from "../../../shared/Validators/password-validator";
 import { HttpParams } from "@angular/common/http";
 import { ButtonDirective } from "primeng/button";
 import { DividerModule } from "primeng/divider";
