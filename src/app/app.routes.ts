@@ -8,6 +8,7 @@ import { ClientFormComponent } from "./modules/client/client-form/client-form.co
 import { BodyGroupComponent } from "./modules/body-group/body-group.component";
 import { BodyGroupFormComponent } from "./modules/body-group/body-group-form/body-group-form.component";
 import { ExerciseComponent } from "./modules/exercise/exercise.component";
+import { ExerciseFormComponent } from "./modules/exercise/exercise-form/exercise-form.component";
 
 export const routes: Routes = [
 	{
@@ -79,15 +80,15 @@ export const routes: Routes = [
 			},
 			{
 				path: 'exercise/create',
-				component: BodyGroupFormComponent
+				component: ExerciseFormComponent
 			},
 			{
 				path: 'exercise/:id/update',
-				component: BodyGroupFormComponent
+				component: ExerciseFormComponent
 			},
 			{
 				path: 'exercise/:id/view',
-				component: BodyGroupFormComponent
+				component: ExerciseFormComponent
 			},
 		]
 	}
