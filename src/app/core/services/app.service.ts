@@ -2,21 +2,25 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { AuthService } from "../../modules/auth/auth.service";
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AppService {
-	private _params: HttpParams = new HttpParams();
-	private _route: string = '';
+	private _route: string;
+	private _params: HttpParams;
 
 	constructor(
 		public http: HttpClient,
+		public authService: AuthService
 	) {
+		this._route = '';
+		this._params = new HttpParams();
 	}
 
 	get route(): string {
-		return this._route;
+		return this.authService.configureRoute(this._route);
 	}
 
 	set route(value: string) {
