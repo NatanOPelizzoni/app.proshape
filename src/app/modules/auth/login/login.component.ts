@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
-import { NgOptimizedImage } from "@angular/common";
+import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { NgIf, NgOptimizedImage } from "@angular/common";
 import { ButtonModule } from "primeng/button";
 import { CheckboxModule } from "primeng/checkbox";
 import { InputTextModule } from "primeng/inputtext";
-import { FormsModule } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { PasswordModule } from "primeng/password";
 import { Ripple } from "primeng/ripple";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
+import { AuthService } from "../auth.service";
+import { MessageService } from "primeng/api";
+import { Subscription } from "rxjs";
+import { ToastModule } from "primeng/toast";
 
 @Component({
 	selector: 'app-login',
@@ -19,12 +23,61 @@ import { RouterLink } from "@angular/router";
 		FormsModule,
 		PasswordModule,
 		Ripple,
-		RouterLink
+		RouterLink,
+		ReactiveFormsModule,
+		NgIf,
+		ToastModule
 	],
 	templateUrl: './login.component.html',
 	styleUrl: './login.component.scss'
 })
-export class LoginComponent {
-
+export class LoginComponent implements OnInit, OnDestroy {
 	password!: string;
+
+	form!: FormGroup;
+
+	private subscriptions: Subscription[] = [];
+
+	constructor(
+		private fb: FormBuilder,
+		private router: Router,
+		private messageService: MessageService,
+		private authService: AuthService,
+		public ref: ChangeDetectorRef,
+	) {
+	}
+
+	ngOnInit() {
+		this._createForm();
+	}
+
+	ngOnDestroy() {
+		this.subscriptions.forEach(element => element.unsubscribe());
+	}
+
+	private _createForm() {
+		this.form = this.fb.group({
+				email: new FormControl(null, [Validators.required]),
+				password: new FormControl(null, [Validators.required]),
+			}
+		);
+	}
+
+	login() {
+		if (this.form.valid) {
+			this.subscriptions.push(
+				this.authService.login(this.form.value).subscribe(
+					(response: any) => {
+						this.authService.setToken(response.success.token);
+						this.router.navigate(['/app']); //TODO: redirect to the dashboard page
+					},
+					(error: any) => {
+						if (error.status === 401 && error.error.message === 'Unauthorised') {
+							this.messageService.add({severity: 'error', summary: 'Erro', detail: 'Usuário ou senha inválidos'});
+						}
+					}
+				)
+			);
+		}
+	}
 }
