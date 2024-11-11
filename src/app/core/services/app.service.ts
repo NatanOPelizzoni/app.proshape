@@ -44,24 +44,23 @@ export class AppService {
 	}
 
 	show(id: number | string, params?: HttpParams) {
-		return this.http.get<any>(this._route).pipe(
-			map(res => res.data),
-			map(data => data.find((row: any) => row.id === id))
-		);
-
-		// return this.get<any>(`${this.route}/${id}`, {params: params});
+		return this.get<any>(`${this.route}/${id}`, {params: params});
 	}
 
 	store(body: any, params: any = null) {
-		//Todo: implement store
+		return this.post<any>(this.route, body, {params: params});
 	}
 
 	update(id: number | string, body: any, params: any = null) {
-		//Todo: implement update
+		return this.patch<any>(`${this.route}/${id}`, body, {params: params});
+	}
+
+	destroy(id: number | string, params: any = null) {
+		return this.delete<any>(`${this.route}/${id}`, {params: params});
 	}
 
 	massDelete(body: any, params: any = null) {
-		//Todo: implement mass delete
+		return this.post<any>(`${this.route}/massdelete`, body, {params: params});
 	}
 
 	patch<T>(url: string, body: any | null, options: any = null): Observable<any> {

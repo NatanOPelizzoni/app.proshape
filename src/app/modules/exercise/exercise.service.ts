@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppService } from "../../core/services/app.service";
 import { HttpClient } from "@angular/common/http";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable({
 	providedIn: 'root'
@@ -8,9 +9,10 @@ import { HttpClient } from "@angular/common/http";
 export class ExerciseService extends AppService {
 
 	constructor(
-		http: HttpClient
+		http: HttpClient,
+		authService: AuthService
 	) {
-		super(http);
-		this.route = 'assets/data/mocks/exercises.json';
+		super(http, authService);
+		this.route = 'exercise';
 	}
 }
