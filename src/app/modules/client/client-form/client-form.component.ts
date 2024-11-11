@@ -6,7 +6,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { NgIf } from "@angular/common";
 import { PaginatorModule } from "primeng/paginator";
 import { PasswordModule } from "primeng/password";
-import { MessageService, PrimeTemplate } from "primeng/api";
+import { PrimeTemplate } from "primeng/api";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Ripple } from "primeng/ripple";
 import { ToastModule } from "primeng/toast";
@@ -17,6 +17,7 @@ import { ClientService } from "../client.service";
 import { HttpParams } from "@angular/common/http";
 import { CalendarModule } from "primeng/calendar";
 import { UserService } from "../../user/user.service";
+import { ToastService } from "../../../shared/services/toast.service";
 
 @Component({
 	selector: 'app-client-form',
@@ -60,7 +61,7 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 		private fb: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		public clientService: ClientService,
 		public userService: UserService,
 		public ref: ChangeDetectorRef,
@@ -184,7 +185,7 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 		}
 
 		console.log(this.form.getRawValue());
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Client criado', life: 1000});
+		this.toastService.showToast('success', 'Sucesso', 'Cliente criado');
 		setTimeout(() => {
 			this.redirectToList();
 		}, 1000);

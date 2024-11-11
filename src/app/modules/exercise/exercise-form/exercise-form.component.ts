@@ -2,7 +2,7 @@ import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit } fro
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MessageService, PrimeTemplate } from "primeng/api";
+import { PrimeTemplate } from "primeng/api";
 import { HttpParams } from "@angular/common/http";
 import { BodyGroupService } from "../../body-group/body-group.service";
 import { ExerciseService } from "../exercise.service";
@@ -15,6 +15,7 @@ import { NgIf } from "@angular/common";
 import { Ripple } from "primeng/ripple";
 import { ToastModule } from "primeng/toast";
 import { ToolbarModule } from "primeng/toolbar";
+import { ToastService } from "../../../shared/services/toast.service";
 
 @Component({
   selector: 'app-exercise-form',
@@ -56,7 +57,7 @@ export class ExerciseFormComponent implements OnInit, OnDestroy, AfterContentIni
 		private fb: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		public exerciseService: ExerciseService,
 		public bodyGroupService: BodyGroupService,
 		public ref: ChangeDetectorRef,
@@ -158,7 +159,7 @@ export class ExerciseFormComponent implements OnInit, OnDestroy, AfterContentIni
 		}
 
 		console.log(this.form.getRawValue());
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Exercício criado', life: 1000});
+		this.toastService.showToast('success', 'Sucesso', 'Exercício criado');
 		setTimeout(() => {
 			this.redirectToList();
 		}, 1000);

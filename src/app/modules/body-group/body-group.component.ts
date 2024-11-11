@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BodyGroup } from "../../data/interfaces/body-group";
-import { MessageService, PrimeTemplate } from "primeng/api";
+import { PrimeTemplate } from "primeng/api";
 import { Router } from "@angular/router";
 import { BodyGroupService } from "./body-group.service";
 import { Table, TableModule } from "primeng/table";
@@ -11,6 +11,7 @@ import { NgIf } from "@angular/common";
 import { Ripple } from "primeng/ripple";
 import { ToastModule } from "primeng/toast";
 import { ToolbarModule } from "primeng/toolbar";
+import { ToastService } from "../../shared/services/toast.service";
 
 @Component({
 	selector: 'app-body-group',
@@ -49,7 +50,7 @@ export class BodyGroupComponent implements OnInit {
 
 	constructor(
 		private bodyGroupService: BodyGroupService,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		private router: Router,
 	) {
 	}
@@ -86,7 +87,7 @@ export class BodyGroupComponent implements OnInit {
 	confirmDelete() {
 		this.deleteBodyGroupDialog = false;
 		this.bodyGroups = this.bodyGroups.filter(val => val.id !== this.bodyGroup.id);
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Grupo muscular deletado', life: 3000});
+		this.toastService.showToast('success', 'Sucesso', 'Grupo muscular deletado', 3000);
 		this.bodyGroup = {};
 	}
 
@@ -97,7 +98,7 @@ export class BodyGroupComponent implements OnInit {
 	confirmDeleteSelected() {
 		this.deleteBodyGroupsDialog = false;
 		this.bodyGroups = this.bodyGroups.filter(val => !this.selectedBodyGroups.includes(val));
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Grupos musculares deletados', life: 3000});
+		this.toastService.showToast('success', 'Sucesso', 'Grupos musculares deletados', 3000);
 		this.selectedBodyGroups = [];
 	}
 

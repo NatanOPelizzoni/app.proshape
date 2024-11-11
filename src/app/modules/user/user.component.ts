@@ -6,11 +6,11 @@ import { Ripple } from "primeng/ripple";
 import { Table, TableModule } from "primeng/table";
 import { User } from "../../data/interfaces/user";
 import { UserService } from "./user.service";
-import { MessageService } from "primeng/api";
 import { InputTextModule } from "primeng/inputtext";
 import { DialogModule } from "primeng/dialog";
 import { NgIf } from "@angular/common";
 import { Router } from "@angular/router";
+import { ToastService } from "../../shared/services/toast.service";
 
 @Component({
 	selector: 'app-user',
@@ -54,7 +54,7 @@ export class UserComponent implements OnInit {
 
 	constructor(
 		private userService: UserService,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		private router: Router,
 	) {
 	}
@@ -93,7 +93,7 @@ export class UserComponent implements OnInit {
 	confirmDelete() {
 		this.deleteUserDialog = false;
 		this.users = this.users.filter(val => val.id !== this.user.id);
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Usuário deletado', life: 3000});
+		this.toastService.showToast('success', 'Sucesso', 'Usuário deletado', 3000);
 		this.user = {};
 	}
 
@@ -104,7 +104,7 @@ export class UserComponent implements OnInit {
 	confirmDeleteSelected() {
 		this.deleteUsersDialog = false;
 		this.users = this.users.filter(val => !this.selectedUsers.includes(val));
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Usuários Deletados', life: 3000});
+		this.toastService.showToast('success', 'Sucesso', 'Usuários deletados', 3000);
 		this.selectedUsers = [];
 	}
 

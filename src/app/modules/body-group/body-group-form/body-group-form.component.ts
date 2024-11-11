@@ -2,7 +2,7 @@ import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit } fro
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MessageService, PrimeTemplate } from "primeng/api";
+import { PrimeTemplate } from "primeng/api";
 import { HttpParams } from "@angular/common/http";
 import { ButtonDirective } from "primeng/button";
 import { DividerModule } from "primeng/divider";
@@ -14,6 +14,7 @@ import { Ripple } from "primeng/ripple";
 import { ToastModule } from "primeng/toast";
 import { ToolbarModule } from "primeng/toolbar";
 import { BodyGroupService } from "../body-group.service";
+import { ToastService } from "../../../shared/services/toast.service";
 
 @Component({
 	selector: 'app-body-group-form',
@@ -59,7 +60,7 @@ export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentIn
 		private fb: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		public bodyGroupService: BodyGroupService,
 		public ref: ChangeDetectorRef,
 	) {
@@ -156,7 +157,7 @@ export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentIn
 		}
 
 		console.log(this.form.getRawValue());
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Grupo muscular criado', life: 1000});
+		this.toastService.showToast('success', 'Sucesso', 'Grupo muscular criado', 1000);
 		setTimeout(() => {
 			this.redirectToList();
 		}, 1000);

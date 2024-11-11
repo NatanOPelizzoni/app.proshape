@@ -15,7 +15,7 @@ import { Subscription } from "rxjs";
 import { PasswordModule } from "primeng/password";
 import { PasswordValidator } from "../../../shared/Validators/password-validator";
 import { DividerModule } from "primeng/divider";
-import { MessageService } from "primeng/api";
+import { ToastService } from "../../../shared/services/toast.service";
 
 @Component({
 	selector: 'app-user-form',
@@ -62,7 +62,7 @@ export class UserFormComponent implements OnInit, OnDestroy, AfterContentInit {
 		private fb: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		public userService: UserService,
 		public ref: ChangeDetectorRef,
 	) {
@@ -169,7 +169,7 @@ export class UserFormComponent implements OnInit, OnDestroy, AfterContentInit {
 		}
 
 		console.log(this.form.getRawValue());
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Usuário criado', life: 1000});
+		this.toastService.showToast('success', 'Sucesso', 'Usuário criado');
 		setTimeout(() => {
 			this.redirectToList();
 		}, 1000);

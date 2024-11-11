@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MessageService, PrimeTemplate } from "primeng/api";
+import { PrimeTemplate } from "primeng/api";
 import { Router } from "@angular/router";
 import { Table, TableModule } from "primeng/table";
 import { ButtonDirective } from "primeng/button";
@@ -14,6 +14,7 @@ import { ExerciseService } from "./exercise.service";
 import { BodyGroup } from "../../data/interfaces/body-group";
 import { BodyGroupService } from "../body-group/body-group.service";
 import { Subscription } from "rxjs";
+import { ToastService } from "../../shared/services/toast.service";
 
 @Component({
 	selector: 'app-exercise',
@@ -55,7 +56,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 	constructor(
 		private exerciseService: ExerciseService,
 		private bodyGroupService: BodyGroupService,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		private router: Router,
 	) {
 		this._getBodyGroups();
@@ -100,7 +101,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 	confirmDelete() {
 		this.deleteExerciseDialog = false;
 		this.exercises = this.exercises.filter(val => val.id !== this.exercise.id);
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Exercício deletado', life: 3000});
+		this.toastService.showToast('success', 'Sucesso', 'Exercício deletado', 3000);
 		this.exercise = {};
 	}
 
@@ -111,7 +112,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 	confirmDeleteSelected() {
 		this.deleteExercisesDialog = false;
 		this.exercises = this.exercises.filter(val => !this.selectedExercises.includes(val));
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Exercícios deletados', life: 3000});
+		this.toastService.showToast('success', 'Sucesso', 'Exercícios deletados', 3000);
 		this.selectedExercises = [];
 	}
 

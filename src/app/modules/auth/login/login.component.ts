@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NgIf, NgOptimizedImage } from "@angular/common";
 import { ButtonModule } from "primeng/button";
 import { CheckboxModule } from "primeng/checkbox";
@@ -8,9 +8,9 @@ import { PasswordModule } from "primeng/password";
 import { Ripple } from "primeng/ripple";
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from "../auth.service";
-import { MessageService } from "primeng/api";
 import { Subscription } from "rxjs";
 import { ToastModule } from "primeng/toast";
+import { ToastService } from "../../../shared/services/toast.service";
 
 @Component({
 	selector: 'app-login',
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		private authService: AuthService,
 		public ref: ChangeDetectorRef,
 	) {
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 					},
 					(error: any) => {
 						if (error.status === 401 && error.error.message === 'Unauthorised') {
-							this.messageService.add({severity: 'error', summary: 'Erro', detail: 'Usuário ou senha inválidos'});
+							this.toastService.showToast('error', 'Erro', 'Usuário ou senha inválidos');
 						}
 					}
 				)
