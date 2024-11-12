@@ -19,21 +19,32 @@ export class ToastService {
 		if (errors) {
 			Object.keys(errors).forEach(key => {
 				errors[key].forEach((message: string) => {
-					const oMessage = this.getFixedMessage(message);
-					this.messageService.add({severity: oMessage.severity, summary: oMessage.summary, detail: oMessage.detail, life: 1000});
+					this.showFixedToast(message);
 				});
 			});
 		}
 	}
 
-	private getFixedMessage(message: string): { severity: string, summary: string, detail: string } {
+	private showFixedToast(message: string): void {
 		switch (message) {
 			case 'The email has already been taken.':
-				return {severity: 'warning', summary: 'Atenção', detail: 'O email já está sendo utilizado.'};
+				this.showToast('warn', 'Atenção', 'O email já está sendo utilizado.', 5000);
+				break;
 			case 'The password field must be at least 8 characters.':
-				return {severity: 'warning', summary: 'Atenção', detail: 'A senha deve ter pelo menos 8 caracteres.'};
+				this.showToast('warn', 'Atenção', 'A senha deve ter pelo menos 8 caracteres.', 5000);
+				break;
+			case 'The name field must not be greater than 255 characters.':
+				this.showToast('warn', 'Atenção', 'O nome não deve ter mais de 255 caracteres.', 5000);
+				break;
+			case 'The email field must be a valid email address.':
+				this.showToast('warn', 'Atenção', 'O email deve ser um endereço de email válido.', 5000);
+				break;
+			case 'The email field must not be greater than 255 characters.':
+				this.showToast('warn', 'Atenção', 'O email não deve ter mais de 255 caracteres.', 5000);
+				break;
 			default:
-				return {severity: 'error', summary: 'Erro', detail: message};
+				this.showToast('error', 'Erro', message, 5000);
+				break;
 		}
 	}
 }

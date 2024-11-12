@@ -59,7 +59,7 @@ export class AppService {
 		return this.delete<any>(`${this.route}/${id}`, {params: params});
 	}
 
-	massDelete(body: any, params: any = null) {
+	massDelete(body: { ids: number[] }, params: any = null) {
 		return this.post<any>(`${this.route}/massdelete`, body, {params: params});
 	}
 
