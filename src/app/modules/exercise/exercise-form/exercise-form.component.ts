@@ -81,6 +81,27 @@ export class ExerciseFormComponent implements OnInit, OnDestroy, AfterContentIni
 		}
 	}
 
+	save() {
+		if (this.form.invalid) {
+			this.toastService.showToast('warn', 'Atenção', 'Formulário inválido');
+			return;
+		}
+
+		if (this.actionType === 'create') {
+			this._store();
+		} else {
+			this._update();
+		}
+	}
+
+	redirectToList() {
+		this.router.navigate(['app/exercise']);
+	}
+
+	redirectToEdit() {
+		this.router.navigate(['app/exercise/' + this.id + '/update']);
+	}
+
 	private _configureActions() {
 		const path = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
 		switch (path) {
@@ -130,7 +151,7 @@ export class ExerciseFormComponent implements OnInit, OnDestroy, AfterContentIni
 			let params = new HttpParams();
 			const subscription = this.exerciseService.show(this.id, params).subscribe(
 				response => {
-					this.data = response;
+					this.data = response.data;
 					this._populate();
 				}
 			);
@@ -153,26 +174,6 @@ export class ExerciseFormComponent implements OnInit, OnDestroy, AfterContentIni
 		this.ref.detectChanges();
 	}
 
-	save() {
-		if (this.form.invalid) {
-			return;
-		}
-
-		console.log(this.form.getRawValue());
-		this.toastService.showToast('success', 'Sucesso', 'Exercício criado');
-		setTimeout(() => {
-			this.redirectToList();
-		}, 1000);
-	}
-
-	redirectToList() {
-		this.router.navigate(['app/exercise']);
-	}
-
-	redirectToEdit() {
-		this.router.navigate(['app/exercise/' + this.id + '/update']);
-	}
-
 	private _getBodyGroups() {
 		const subscription = this.bodyGroupService.getBodyGroups(true).subscribe(bodyGroups => {
 			this.dropdownBodyGroups = bodyGroups.map(bodyGroup => ({
@@ -181,6 +182,41 @@ export class ExerciseFormComponent implements OnInit, OnDestroy, AfterContentIni
 			}));
 		});
 		this.subscriptions.push(subscription);
+	}
+
+	private _store() {
+		const subscription = this.exerciseService.store(this.form.value).subscribe(
+			response => {
+				this.id = response.data.id;
+				this.toastService.showToast('success', 'Sucesso', 'Exercício criado');
+				setTimeout(() => {
+					this.redirectToList();
+				}, 1000);
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+			}
+		);
+		this.subscriptions.push(subscription);
+	}
+
+	private _update() {
+		if (this.id !== null) {
+			const subscription = this.exerciseService.update(this.id, this.form.value).subscribe(
+				response => {
+					this.toastService.showToast('success', 'Sucesso', 'Exercício atualizado');
+					setTimeout(() => {
+						this.redirectToList();
+					}, 1000);
+				},
+				error => {
+					this.toastService.showCrudAlerts(error.error.errors);
+				}
+			);
+			this.subscriptions.push(subscription);
+		} else {
+			this.toastService.showToast('error', 'Erro', 'Houve um erro ao pegar o id do exercício');
+		}
 	}
 
 }
