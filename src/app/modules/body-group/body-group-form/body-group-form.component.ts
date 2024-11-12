@@ -82,6 +82,27 @@ export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentIn
 		}
 	}
 
+	save() {
+		if (this.form.invalid) {
+			this.toastService.showToast('warn', 'Atenção', 'Formulário inválido');
+			return;
+		}
+
+		if (this.actionType === 'create') {
+			this._store();
+		} else {
+			this._update();
+		}
+	}
+
+	redirectToList() {
+		this.router.navigate(['app/body-group']);
+	}
+
+	redirectToEdit() {
+		this.router.navigate(['app/body-group/' + this.id + '/update']);
+	}
+
 	private _configureActions() {
 		const path = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
 		switch (path) {
@@ -129,7 +150,7 @@ export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentIn
 			let params = new HttpParams();
 			const subscription = this.bodyGroupService.show(this.id, params).subscribe(
 				response => {
-					this.data = response;
+					this.data = response.data;
 					this._populate();
 				}
 			);
@@ -151,24 +172,38 @@ export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentIn
 		this.ref.detectChanges();
 	}
 
-	save() {
-		if (this.form.invalid) {
-			return;
+	private _store() {
+		const subscription = this.bodyGroupService.store(this.form.value).subscribe(
+			response => {
+				this.id = response.data.id;
+				this.toastService.showToast('success', 'Sucesso', 'Grupo muscular criado');
+				setTimeout(() => {
+					this.redirectToList();
+				}, 1000);
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+			}
+		);
+		this.subscriptions.push(subscription);
+	}
+
+	private _update() {
+		if (this.id !== null) {
+			const subscription = this.bodyGroupService.update(this.id, this.form.value).subscribe(
+				response => {
+					this.toastService.showToast('success', 'Sucesso', 'Grupo muscular atualizado');
+					setTimeout(() => {
+						this.redirectToList();
+					}, 1000);
+				},
+				error => {
+					this.toastService.showCrudAlerts(error.error.errors);
+				}
+			);
+			this.subscriptions.push(subscription);
+		} else {
+			this.toastService.showToast('error', 'Erro', 'Houve um erro ao pegar o id do grupo muscular');
 		}
-
-		console.log(this.form.getRawValue());
-		this.toastService.showToast('success', 'Sucesso', 'Grupo muscular criado', 1000);
-		setTimeout(() => {
-			this.redirectToList();
-		}, 1000);
 	}
-
-	redirectToList() {
-		this.router.navigate(['app/body-group']);
-	}
-
-	redirectToEdit() {
-		this.router.navigate(['app/body-group/' + this.id + '/update']);
-	}
-
 }
