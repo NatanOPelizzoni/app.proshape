@@ -109,10 +109,20 @@ export class ClientComponent implements OnInit, OnDestroy {
 	}
 
 	confirmDelete() {
-		this.deleteClientDialog = false;
-		this.clients = this.clients.filter(val => val.id !== this.client.id);
-		this.toastService.showToast('success', 'Sucesso', 'Cliente deletado', 3000);
-		this.client = {};
+		if (this.client.id !== undefined) {
+			const subscription = this.clientService.destroy(this.client.id).subscribe(
+				response => {
+					this.clients = this.clients.filter(val => val.id !== this.client.id);
+					this.client = {};
+					this.toastService.showToast('success', 'Sucesso', 'Cliente deletado', 3000);
+				},
+				error => {
+					this.toastService.showCrudAlerts(error.error.errors);
+				}
+			);
+			this.subscriptions.push(subscription);
+			this.deleteClientDialog = false;
+		}
 	}
 
 	deleteSelectedClients() {
@@ -120,10 +130,19 @@ export class ClientComponent implements OnInit, OnDestroy {
 	}
 
 	confirmDeleteSelected() {
+		const selectedUsersIds = this.selectedClients.map(val => val.id as number);
+		const subscription = this.clientService.massDelete({ids: selectedUsersIds}).subscribe(
+			response => {
+				this.clients = this.clients.filter(val => !this.selectedClients.includes(val));
+				this.selectedClients = [];
+				this.toastService.showToast('success', 'Sucesso', 'Clientes deletados', 3000);
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+			}
+		);
+		this.subscriptions.push(subscription);
 		this.deleteClientsDialog = false;
-		this.clients = this.clients.filter(val => !this.selectedClients.includes(val));
-		this.toastService.showToast('success', 'Sucesso', 'Clientes deletados', 3000);
-		this.selectedClients = [];
 	}
 
 	onGlobalFilter(table: Table, event: Event) {

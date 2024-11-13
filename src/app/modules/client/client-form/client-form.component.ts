@@ -85,6 +85,27 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 		}
 	}
 
+	save() {
+		if (this.form.invalid) {
+			this.toastService.showToast('warn', 'Atenção', 'Formulário inválido');
+			return;
+		}
+
+		if (this.actionType === 'create') {
+			this._store();
+		} else {
+			this._update();
+		}
+	}
+
+	redirectToList() {
+		this.router.navigate(['app/client']);
+	}
+
+	redirectToEdit() {
+		this.router.navigate(['app/client/' + this.id + '/update']);
+	}
+
 	private _configureActions() {
 		const path = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
 		switch (path) {
@@ -145,7 +166,7 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 			let params = new HttpParams();
 			const subscription = this.clientService.show(this.id, params).subscribe(
 				response => {
-					this.data = response;
+					this.data = response.data;
 					this._populate();
 				}
 			);
@@ -179,26 +200,6 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 		this.ref.detectChanges();
 	}
 
-	save() {
-		if (this.form.invalid) {
-			return;
-		}
-
-		console.log(this.form.getRawValue());
-		this.toastService.showToast('success', 'Sucesso', 'Cliente criado');
-		setTimeout(() => {
-			this.redirectToList();
-		}, 1000);
-	}
-
-	redirectToList() {
-		this.router.navigate(['app/client']);
-	}
-
-	redirectToEdit() {
-		this.router.navigate(['app/client/' + this.id + '/update']);
-	}
-
 	private _getInstructors() {
 		const subscription = this.userService.getInstructors().subscribe(instructors => {
 			this.dropdownInstructors = instructors.map(instructor => ({
@@ -207,5 +208,40 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 			}));
 		});
 		this.subscriptions.push(subscription);
+	}
+
+	private _store() {
+		const subscription = this.clientService.store(this.form.value).subscribe(
+			response => {
+				this.id = response.data.id;
+				this.toastService.showToast('success', 'Sucesso', 'Cliente criado');
+				setTimeout(() => {
+					this.redirectToList();
+				}, 1000);
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+			}
+		);
+		this.subscriptions.push(subscription);
+	}
+
+	private _update() {
+		if (this.id !== null) {
+			const subscription = this.clientService.update(this.id, this.form.value).subscribe(
+				response => {
+					this.toastService.showToast('success', 'Sucesso', 'Cliente atualizado');
+					setTimeout(() => {
+						this.redirectToList();
+					}, 1000);
+				},
+				error => {
+					this.toastService.showCrudAlerts(error.error.errors);
+				}
+			);
+			this.subscriptions.push(subscription);
+		} else {
+			this.toastService.showToast('error', 'Erro', 'Houve um erro ao pegar o id do cliente');
+		}
 	}
 }
