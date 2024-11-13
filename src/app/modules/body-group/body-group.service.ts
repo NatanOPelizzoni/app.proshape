@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { User } from "../../data/interfaces/user";
 import { map } from "rxjs/operators";
 import { BodyGroup } from "../../data/interfaces/body-group";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable({
 	providedIn: 'root'
@@ -12,10 +13,11 @@ import { BodyGroup } from "../../data/interfaces/body-group";
 export class BodyGroupService extends AppService {
 
 	constructor(
-		http: HttpClient
+		http: HttpClient,
+		authService: AuthService
 	) {
-		super(http);
-		this.route = 'assets/data/mocks/body-groups.json';
+		super(http, authService);
+		this.route = 'body-group';
 	}
 
 	getBodyGroups(returnActives: boolean = false): Observable<User[]> {

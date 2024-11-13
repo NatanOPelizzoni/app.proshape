@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BodyGroup } from "../../data/interfaces/body-group";
-import { MessageService, PrimeTemplate } from "primeng/api";
+import { PrimeTemplate } from "primeng/api";
 import { Router } from "@angular/router";
 import { BodyGroupService } from "./body-group.service";
 import { Table, TableModule } from "primeng/table";
@@ -11,6 +11,8 @@ import { NgIf } from "@angular/common";
 import { Ripple } from "primeng/ripple";
 import { ToastModule } from "primeng/toast";
 import { ToolbarModule } from "primeng/toolbar";
+import { ToastService } from "../../shared/services/toast.service";
+import { Subscription } from "rxjs";
 
 @Component({
 	selector: 'app-body-group',
@@ -29,7 +31,7 @@ import { ToolbarModule } from "primeng/toolbar";
 	templateUrl: './body-group.component.html',
 	styleUrl: './body-group.component.scss'
 })
-export class BodyGroupComponent implements OnInit {
+export class BodyGroupComponent implements OnInit, OnDestroy {
 
 	deleteBodyGroupDialog: boolean = false;
 
@@ -47,9 +49,11 @@ export class BodyGroupComponent implements OnInit {
 
 	rowsPerPageOptions = [5, 10, 20];
 
+	private subscriptions: Subscription[] = [];
+
 	constructor(
 		private bodyGroupService: BodyGroupService,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		private router: Router,
 	) {
 	}
@@ -62,6 +66,10 @@ export class BodyGroupComponent implements OnInit {
 			{field: 'name', header: 'Nome'},
 			{field: 'status', header: 'Status'},
 		];
+	}
+
+	ngOnDestroy() {
+		this.subscriptions.forEach(element => element.unsubscribe());
 	}
 
 	openNew() {
@@ -84,10 +92,20 @@ export class BodyGroupComponent implements OnInit {
 	}
 
 	confirmDelete() {
-		this.deleteBodyGroupDialog = false;
-		this.bodyGroups = this.bodyGroups.filter(val => val.id !== this.bodyGroup.id);
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Grupo muscular deletado', life: 3000});
-		this.bodyGroup = {};
+		if (this.bodyGroup.id !== undefined) {
+			const subscription = this.bodyGroupService.destroy(this.bodyGroup.id).subscribe(
+				response => {
+					this.bodyGroups = this.bodyGroups.filter(val => val.id !== this.bodyGroup.id);
+					this.toastService.showToast('success', 'Sucesso', 'Grupo muscular deletado', 3000);
+					this.bodyGroup = {};
+				},
+				error => {
+					this.toastService.showCrudAlerts(error.error.errors);
+				}
+			)
+			this.subscriptions.push(subscription);
+			this.deleteBodyGroupDialog = false;
+		}
 	}
 
 	deleteSelectedBodyGroups() {
@@ -95,10 +113,19 @@ export class BodyGroupComponent implements OnInit {
 	}
 
 	confirmDeleteSelected() {
+		const selectedBodyGroupsIds = this.selectedBodyGroups.map(bodyGroup => bodyGroup.id as number);
+		const subscription = this.bodyGroupService.massDelete({ ids: selectedBodyGroupsIds }).subscribe(
+			response => {
+				this.bodyGroups = this.bodyGroups.filter(val => !this.selectedBodyGroups.includes(val));
+				this.selectedBodyGroups = [];
+				this.toastService.showToast('success', 'Sucesso', 'Grupos musculares deletados', 3000);
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+			}
+		);
+		this.subscriptions.push(subscription);
 		this.deleteBodyGroupsDialog = false;
-		this.bodyGroups = this.bodyGroups.filter(val => !this.selectedBodyGroups.includes(val));
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Grupos musculares deletados', life: 3000});
-		this.selectedBodyGroups = [];
 	}
 
 	onGlobalFilter(table: Table, event: Event) {

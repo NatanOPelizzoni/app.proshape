@@ -3,7 +3,7 @@ import { ButtonDirective } from "primeng/button";
 import { DialogModule } from "primeng/dialog";
 import { InputTextModule } from "primeng/inputtext";
 import { NgIf } from "@angular/common";
-import { MessageService, PrimeTemplate } from "primeng/api";
+import { PrimeTemplate } from "primeng/api";
 import { Ripple } from "primeng/ripple";
 import { Table, TableModule } from "primeng/table";
 import { ToastModule } from "primeng/toast";
@@ -14,6 +14,7 @@ import { ClientService } from "./client.service";
 import { User } from "../../data/interfaces/user";
 import { UserService } from "../user/user.service";
 import { Subscription } from "rxjs";
+import { ToastService } from "../../shared/services/toast.service";
 
 @Component({
 	selector: 'app-client',
@@ -55,7 +56,7 @@ export class ClientComponent implements OnInit, OnDestroy {
 	constructor(
 		private clientService: ClientService,
 		private userService: UserService,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		private router: Router,
 	) {
 	}
@@ -108,10 +109,20 @@ export class ClientComponent implements OnInit, OnDestroy {
 	}
 
 	confirmDelete() {
-		this.deleteClientDialog = false;
-		this.clients = this.clients.filter(val => val.id !== this.client.id);
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Cliente deletado', life: 3000});
-		this.client = {};
+		if (this.client.id !== undefined) {
+			const subscription = this.clientService.destroy(this.client.id).subscribe(
+				response => {
+					this.clients = this.clients.filter(val => val.id !== this.client.id);
+					this.client = {};
+					this.toastService.showToast('success', 'Sucesso', 'Cliente deletado', 3000);
+				},
+				error => {
+					this.toastService.showCrudAlerts(error.error.errors);
+				}
+			);
+			this.subscriptions.push(subscription);
+			this.deleteClientDialog = false;
+		}
 	}
 
 	deleteSelectedClients() {
@@ -119,10 +130,19 @@ export class ClientComponent implements OnInit, OnDestroy {
 	}
 
 	confirmDeleteSelected() {
+		const selectedUsersIds = this.selectedClients.map(val => val.id as number);
+		const subscription = this.clientService.massDelete({ids: selectedUsersIds}).subscribe(
+			response => {
+				this.clients = this.clients.filter(val => !this.selectedClients.includes(val));
+				this.selectedClients = [];
+				this.toastService.showToast('success', 'Sucesso', 'Clientes deletados', 3000);
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+			}
+		);
+		this.subscriptions.push(subscription);
 		this.deleteClientsDialog = false;
-		this.clients = this.clients.filter(val => !this.selectedClients.includes(val));
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Clientes deletados', life: 3000});
-		this.selectedClients = [];
 	}
 
 	onGlobalFilter(table: Table, event: Event) {

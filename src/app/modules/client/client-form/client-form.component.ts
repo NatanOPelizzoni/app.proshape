@@ -6,7 +6,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { NgIf } from "@angular/common";
 import { PaginatorModule } from "primeng/paginator";
 import { PasswordModule } from "primeng/password";
-import { MessageService, PrimeTemplate } from "primeng/api";
+import { PrimeTemplate } from "primeng/api";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Ripple } from "primeng/ripple";
 import { ToastModule } from "primeng/toast";
@@ -17,6 +17,7 @@ import { ClientService } from "../client.service";
 import { HttpParams } from "@angular/common/http";
 import { CalendarModule } from "primeng/calendar";
 import { UserService } from "../../user/user.service";
+import { ToastService } from "../../../shared/services/toast.service";
 
 @Component({
 	selector: 'app-client-form',
@@ -60,7 +61,7 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 		private fb: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		public clientService: ClientService,
 		public userService: UserService,
 		public ref: ChangeDetectorRef,
@@ -82,6 +83,27 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 		if (this.actionType !== 'create') {
 			this._load();
 		}
+	}
+
+	save() {
+		if (this.form.invalid) {
+			this.toastService.showToast('warn', 'Atenção', 'Formulário inválido');
+			return;
+		}
+
+		if (this.actionType === 'create') {
+			this._store();
+		} else {
+			this._update();
+		}
+	}
+
+	redirectToList() {
+		this.router.navigate(['app/client']);
+	}
+
+	redirectToEdit() {
+		this.router.navigate(['app/client/' + this.id + '/update']);
 	}
 
 	private _configureActions() {
@@ -144,7 +166,7 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 			let params = new HttpParams();
 			const subscription = this.clientService.show(this.id, params).subscribe(
 				response => {
-					this.data = response;
+					this.data = response.data;
 					this._populate();
 				}
 			);
@@ -178,26 +200,6 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 		this.ref.detectChanges();
 	}
 
-	save() {
-		if (this.form.invalid) {
-			return;
-		}
-
-		console.log(this.form.getRawValue());
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Client criado', life: 1000});
-		setTimeout(() => {
-			this.redirectToList();
-		}, 1000);
-	}
-
-	redirectToList() {
-		this.router.navigate(['app/client']);
-	}
-
-	redirectToEdit() {
-		this.router.navigate(['app/client/' + this.id + '/update']);
-	}
-
 	private _getInstructors() {
 		const subscription = this.userService.getInstructors().subscribe(instructors => {
 			this.dropdownInstructors = instructors.map(instructor => ({
@@ -206,5 +208,40 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 			}));
 		});
 		this.subscriptions.push(subscription);
+	}
+
+	private _store() {
+		const subscription = this.clientService.store(this.form.value).subscribe(
+			response => {
+				this.id = response.data.id;
+				this.toastService.showToast('success', 'Sucesso', 'Cliente criado');
+				setTimeout(() => {
+					this.redirectToList();
+				}, 1000);
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+			}
+		);
+		this.subscriptions.push(subscription);
+	}
+
+	private _update() {
+		if (this.id !== null) {
+			const subscription = this.clientService.update(this.id, this.form.value).subscribe(
+				response => {
+					this.toastService.showToast('success', 'Sucesso', 'Cliente atualizado');
+					setTimeout(() => {
+						this.redirectToList();
+					}, 1000);
+				},
+				error => {
+					this.toastService.showCrudAlerts(error.error.errors);
+				}
+			);
+			this.subscriptions.push(subscription);
+		} else {
+			this.toastService.showToast('error', 'Erro', 'Houve um erro ao pegar o id do cliente');
+		}
 	}
 }

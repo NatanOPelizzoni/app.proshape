@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastModule } from "primeng/toast";
 import { ToolbarModule } from "primeng/toolbar";
 import { ButtonDirective } from "primeng/button";
@@ -6,11 +6,12 @@ import { Ripple } from "primeng/ripple";
 import { Table, TableModule } from "primeng/table";
 import { User } from "../../data/interfaces/user";
 import { UserService } from "./user.service";
-import { MessageService } from "primeng/api";
 import { InputTextModule } from "primeng/inputtext";
 import { DialogModule } from "primeng/dialog";
 import { NgIf } from "@angular/common";
 import { Router } from "@angular/router";
+import { ToastService } from "../../shared/services/toast.service";
+import { Subscription } from "rxjs";
 
 @Component({
 	selector: 'app-user',
@@ -28,7 +29,7 @@ import { Router } from "@angular/router";
 	templateUrl: './user.component.html',
 	styleUrl: './user.component.scss'
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
 
 	roles = [
 		{value: 'A', description: 'ADMIN'},
@@ -52,9 +53,11 @@ export class UserComponent implements OnInit {
 
 	rowsPerPageOptions = [5, 10, 20];
 
+	private subscriptions: Subscription[] = [];
+
 	constructor(
 		private userService: UserService,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		private router: Router,
 	) {
 	}
@@ -69,6 +72,10 @@ export class UserComponent implements OnInit {
 			{field: 'role', header: 'Perfil'},
 			{field: 'status', header: 'Status'},
 		];
+	}
+
+	ngOnDestroy() {
+		this.subscriptions.forEach(element => element.unsubscribe());
 	}
 
 	openNew() {
@@ -91,10 +98,20 @@ export class UserComponent implements OnInit {
 	}
 
 	confirmDelete() {
-		this.deleteUserDialog = false;
-		this.users = this.users.filter(val => val.id !== this.user.id);
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Usuário deletado', life: 3000});
-		this.user = {};
+		if (this.user.id !== undefined) {
+			const subscription = this.userService.destroy(this.user.id).subscribe(
+				response => {
+					this.users = this.users.filter(val => val.id !== this.user.id);
+					this.user = {};
+					this.toastService.showToast('success', 'Sucesso', 'Usuário deletado', 3000);
+				},
+				error => {
+					this.toastService.showCrudAlerts(error.error.errors);
+				}
+			);
+			this.subscriptions.push(subscription);
+			this.deleteUserDialog = false;
+		}
 	}
 
 	deleteSelectedUsers() {
@@ -102,10 +119,19 @@ export class UserComponent implements OnInit {
 	}
 
 	confirmDeleteSelected() {
+		const selectedUsersIds = this.selectedUsers.map(val => val.id as number);
+		const subscription = this.userService.massDelete({ids: selectedUsersIds}).subscribe(
+			response => {
+				this.users = this.users.filter(val => !this.selectedUsers.includes(val));
+				this.selectedUsers = [];
+				this.toastService.showToast('success', 'Sucesso', 'Usuários deletados', 3000);
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+			}
+		);
+		this.subscriptions.push(subscription);
 		this.deleteUsersDialog = false;
-		this.users = this.users.filter(val => !this.selectedUsers.includes(val));
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Usuários Deletados', life: 3000});
-		this.selectedUsers = [];
 	}
 
 	getRoleDescription(roleValue: string): string {

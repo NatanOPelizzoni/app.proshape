@@ -2,7 +2,7 @@ import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit } fro
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MessageService, PrimeTemplate } from "primeng/api";
+import { PrimeTemplate } from "primeng/api";
 import { HttpParams } from "@angular/common/http";
 import { ButtonDirective } from "primeng/button";
 import { DividerModule } from "primeng/divider";
@@ -14,6 +14,7 @@ import { Ripple } from "primeng/ripple";
 import { ToastModule } from "primeng/toast";
 import { ToolbarModule } from "primeng/toolbar";
 import { BodyGroupService } from "../body-group.service";
+import { ToastService } from "../../../shared/services/toast.service";
 
 @Component({
 	selector: 'app-body-group-form',
@@ -59,7 +60,7 @@ export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentIn
 		private fb: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
-		private messageService: MessageService,
+		private toastService: ToastService,
 		public bodyGroupService: BodyGroupService,
 		public ref: ChangeDetectorRef,
 	) {
@@ -79,6 +80,27 @@ export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentIn
 		if (this.actionType !== 'create') {
 			this._load();
 		}
+	}
+
+	save() {
+		if (this.form.invalid) {
+			this.toastService.showToast('warn', 'Atenção', 'Formulário inválido');
+			return;
+		}
+
+		if (this.actionType === 'create') {
+			this._store();
+		} else {
+			this._update();
+		}
+	}
+
+	redirectToList() {
+		this.router.navigate(['app/body-group']);
+	}
+
+	redirectToEdit() {
+		this.router.navigate(['app/body-group/' + this.id + '/update']);
 	}
 
 	private _configureActions() {
@@ -128,7 +150,7 @@ export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentIn
 			let params = new HttpParams();
 			const subscription = this.bodyGroupService.show(this.id, params).subscribe(
 				response => {
-					this.data = response;
+					this.data = response.data;
 					this._populate();
 				}
 			);
@@ -150,24 +172,38 @@ export class BodyGroupFormComponent implements OnInit, OnDestroy, AfterContentIn
 		this.ref.detectChanges();
 	}
 
-	save() {
-		if (this.form.invalid) {
-			return;
+	private _store() {
+		const subscription = this.bodyGroupService.store(this.form.value).subscribe(
+			response => {
+				this.id = response.data.id;
+				this.toastService.showToast('success', 'Sucesso', 'Grupo muscular criado');
+				setTimeout(() => {
+					this.redirectToList();
+				}, 1000);
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+			}
+		);
+		this.subscriptions.push(subscription);
+	}
+
+	private _update() {
+		if (this.id !== null) {
+			const subscription = this.bodyGroupService.update(this.id, this.form.value).subscribe(
+				response => {
+					this.toastService.showToast('success', 'Sucesso', 'Grupo muscular atualizado');
+					setTimeout(() => {
+						this.redirectToList();
+					}, 1000);
+				},
+				error => {
+					this.toastService.showCrudAlerts(error.error.errors);
+				}
+			);
+			this.subscriptions.push(subscription);
+		} else {
+			this.toastService.showToast('error', 'Erro', 'Houve um erro ao pegar o id do grupo muscular');
 		}
-
-		console.log(this.form.getRawValue());
-		this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Grupo muscular criado', life: 1000});
-		setTimeout(() => {
-			this.redirectToList();
-		}, 1000);
 	}
-
-	redirectToList() {
-		this.router.navigate(['app/body-group']);
-	}
-
-	redirectToEdit() {
-		this.router.navigate(['app/body-group/' + this.id + '/update']);
-	}
-
 }

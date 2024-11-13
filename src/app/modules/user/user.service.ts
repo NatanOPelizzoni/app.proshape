@@ -4,6 +4,7 @@ import { AppService } from "../../core/services/app.service";
 import { Observable } from "rxjs";
 import { User } from "../../data/interfaces/user";
 import { map } from "rxjs/operators";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable({
     providedIn: 'root'
@@ -11,10 +12,11 @@ import { map } from "rxjs/operators";
 export class UserService extends AppService {
 
     constructor(
-        http: HttpClient
+        http: HttpClient,
+		authService: AuthService
     ) {
-        super(http);
-        this.route = 'assets/data/mocks/users.json';
+        super(http, authService);
+        this.route = 'user';
     }
 
 	getInstructors(): Observable<User[]> {
