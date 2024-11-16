@@ -59,20 +59,17 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 		private toastService: ToastService,
 		private router: Router,
 	) {
+		this._getExercises();
 		this._getBodyGroups();
 	}
 
 	ngOnInit() {
-		this.exerciseService.getAll().subscribe((data: Exercise[]) => this.exercises = data);
-
 		this.cols = [
 			{field: 'id', header: 'ID'},
 			{field: 'name', header: 'Nome'},
 			{field: 'status', header: 'Status'},
 			{field: 'bodyGroup', header: 'Grupo Muscular'},
 		];
-
-		this._loadFixedValues();
 	}
 
 	ngOnDestroy() {
@@ -157,11 +154,14 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 				}
 				return acc;
 			}, {} as { [key: number]: string });
-			this.exerciseService.getAll().subscribe((data: Exercise[]) => {
-				this.exercises = data;
-				this._loadFixedValues();
-			});
 		});
 		this.subscriptions.push(subscription);
+	}
+
+	private _getExercises() {
+		const subscription = this.exerciseService.getAll().subscribe((data: Exercise[]) => {
+			this.exercises = data;
+			this._loadFixedValues();
+		});
 	}
 }
