@@ -167,7 +167,7 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 			const subscription = this.clientService.show(this.id, params).subscribe(
 				response => {
 					this.data = response.data;
-					this._populate();
+					this._loadFixedValues();
 				}
 			);
 			this.subscriptions.push(subscription);
@@ -243,5 +243,13 @@ export class ClientFormComponent implements OnInit, OnDestroy, AfterContentInit 
 		} else {
 			this.toastService.showToast('error', 'Erro', 'Houve um erro ao pegar o id do cliente');
 		}
+	}
+
+	private _loadFixedValues() {
+		if (this.data) {
+			this.data.birth_date = new Date(this.data.birth_date);
+		}
+
+		this._populate();
 	}
 }
