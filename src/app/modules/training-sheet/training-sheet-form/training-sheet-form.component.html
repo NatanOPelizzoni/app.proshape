@@ -1,1 +1,179 @@
-<p>training-sheet-form works!</p>
+<div class="grid">
+	<div class="col-12">
+		<div class="card px-6 py-6">
+			<p-toolbar styleClass="mb-4">
+				<ng-template pTemplate="left">
+				</ng-template>
+				<ng-template pTemplate="right">
+					<div class="my-2">
+						<button pButton pRipple label="Voltar" icon="pi pi-arrow-left" class="p-button-default mr-2" (click)="redirectToList()"></button>
+						<button *ngIf="!readonly" pButton pRipple label="Salvar" icon="pi pi-save" class="p-button-success" [disabled]="form.invalid" (click)="save()"></button>
+						<button *ngIf="readonly" pButton pRipple label="Editar" icon="pi pi-pencil" class="p-button-warning" [disabled]="!readonly" (click)="redirectToEdit()"></button>
+					</div>
+				</ng-template>
+			</p-toolbar>
+
+			<div class="col-12">
+				<form [formGroup]="form">
+					<div class="card">
+						<h5>{{ headerTitle }}</h5>
+						<div class="p-fluid p-formgrid grid">
+							<div class="field col-12 md:col-3"> <!-- CLIENT -->
+								<label htmlFor="client_id">Cliente *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="client_id" [options]="dropdownClients" placeholder="Selecione um cliente" [showClear]="true" [filter]="true" [filterBy]="'description'" optionValue="value" optionLabel="description"></p-dropdown>
+								<small class="p-error block"
+									   *ngIf="form.get('client_id')?.invalid && form.get('client_id')?.dirty"
+								>
+									Cliente é obrigatório!
+								</small>
+							</div> <!-- CLIENT -->
+							<div class="field col-12 md:col-3"> <!-- START DATE -->
+								<label htmlFor="start_date">Data de início *</label>
+								<p-calendar [readonlyInput]="readonly" [required]="true" [dateFormat]="'dd/mm/yy'" [showClear]="true" formControlName="start_date" id="start_date"/>
+								<small class="p-error block"
+									   *ngIf="form.get('start_date')?.invalid && form.get('start_date')?.dirty"
+								>
+									Data de início é obrigatório!
+								</small>
+							</div> <!-- START DATE -->
+							<div class="field col-12 md:col-3"> <!-- END DATE -->
+								<label htmlFor="end_date">Data de término *</label>
+								<p-calendar [readonlyInput]="readonly" [required]="true" [dateFormat]="'dd/mm/yy'" [showClear]="true" formControlName="end_date" id="end_date"/>
+								<small class="p-error block"
+									   *ngIf="form.get('end_date')?.invalid && form.get('end_date')?.dirty"
+								>
+									Data de término é obrigatório!
+								</small>
+							</div> <!-- END DATE -->
+							<div class="field col-12 md:col-3"> <!-- STATUS -->
+								<label htmlFor="status">Status *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="status" [options]="dropdownStatus" placeholder="Selecione um status" [showClear]="true" optionValue="value" optionLabel="description"></p-dropdown>
+								<small class="p-error block"
+									   *ngIf="form.get('status')?.invalid && form.get('status')?.dirty"
+								>
+									Status é obrigatório!
+								</small>
+							</div> <!-- STATUS -->
+
+							<div class="field col-12 md:col-12"> <!-- EXERCISE -->
+								<p-table #dt
+										 [value]="exercises"
+										 [columns]="cols"
+										 responsiveLayout="scroll"
+										 [rows]="10"
+										 [globalFilterFields]="['exercise_description', 'body_group_description', 'series', 'repetitions', 'wight', 'order']"
+										 [paginator]="true"
+										 [rowsPerPageOptions]="rowsPerPageOptions"
+										 [showCurrentPageReport]="true"
+										 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+										 [(selection)]="selectedExercises"
+										 selectionMode="multiple"
+										 [rowHover]="true"
+										 dataKey="id"
+								>
+									<ng-template pTemplate="caption">
+										<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+											<h5 class="m-0">Exercícios</h5>
+											<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+												<div>
+													<span class="block mt-2 md:mt-0 p-input-icon-left">
+														<i class="pi pi-search"></i>
+														<input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." class="w-full sm:w-auto"/>
+													</span>
+												</div>
+												<div>
+													<button *ngIf="!readonly" pButton pRipple class="p-button-default p-button-icon-only m-1" pTooltip="Gerar treino com IA" tooltipPosition="top" (click)="generateTrainingSheetWithAI()">
+														<i class="fas fa-robot"></i>
+													</button>
+													<button *ngIf="!readonly" pButton pRipple class="p-button-danger p-button-icon-only m-1" pTooltip="Remover exercícios selecionados" tooltipPosition="top" (click)="removeSelectedExercise()"  [disabled]="!selectedExercises || !selectedExercises.length">
+														<i class="fas fa-trash"></i>
+													</button>
+													<button *ngIf="!readonly" pButton pRipple class="p-button-success p-button-icon-only m-1" pTooltip="Adicionar exercício" tooltipPosition="top" (click)="openNewExerciseModal()">
+														<i class="fas fa-plus"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</ng-template>
+									<ng-template pTemplate="header">
+										<tr>
+											<th style="width: 3rem">
+												<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+											</th>
+											<th pSortableColumn="exercise_description">
+												Exercício
+												<p-sortIcon field="exercise_description"></p-sortIcon>
+											</th>
+											<th pSortableColumn="bodyGroup">
+												Grupo Muscular
+												<p-sortIcon field="bodyGroup"></p-sortIcon>
+											</th>
+											<th pSortableColumn="series">
+												Séries
+												<p-sortIcon field="series"></p-sortIcon>
+											</th>
+											<th pSortableColumn="repetitions">
+												Repetições
+												<p-sortIcon field="repetitions"></p-sortIcon>
+											</th>
+											<th pSortableColumn="weight">
+												Peso
+												<p-sortIcon field="weight"></p-sortIcon>
+											</th>
+											<th pSortableColumn="order">
+												Ordem
+												<p-sortIcon field="order"></p-sortIcon>
+											</th>
+											<th></th>
+										</tr>
+									</ng-template>
+									<ng-template pTemplate="body" let-exercise>
+										<tr>
+											<td>
+												<p-tableCheckbox [value]="exercise"></p-tableCheckbox>
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Exercício</span>
+												{{ exercise.exercise_description }}
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Grupo Musuclar</span>
+												{{ exercise.body_group_description }}
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Séries</span>
+												{{ exercise.series }}
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Repetições</span>
+												{{ exercise.repetitions }}
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Peso</span>
+												{{ exercise.weight }}
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Ordem</span>
+												{{ exercise.order }}
+											</td>
+											<td>
+												<div class="flex">
+													<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editTrainingSheetExercise(exercise)"></button>
+													<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteTrainingSheetExercise(exercise)"></button>
+												</div>
+											</td>
+										</tr>
+									</ng-template>
+								</p-table>
+							</div> <!-- EXERCISES -->
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template pTemplate="material-icon-robot">
+	<span class="material-icons">smart_toy</span>
+</ng-template>
