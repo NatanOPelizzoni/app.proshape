@@ -20,6 +20,8 @@ import { TrainingSheetExercise } from "../../../data/interfaces/training-sheet-e
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { ExerciseService } from "../../exercise/exercise.service";
 import { BodyGroupService } from "../../body-group/body-group.service";
+import { DialogModule } from "primeng/dialog";
+import { InputNumberModule } from "primeng/inputnumber";
 
 @Component({
 	selector: 'app-training-sheet-form',
@@ -36,7 +38,9 @@ import { BodyGroupService } from "../../body-group/body-group.service";
 		CalendarModule,
 		TableModule,
 		TooltipModule,
-		FaIconComponent
+		FaIconComponent,
+		DialogModule,
+		InputNumberModule
 	],
 	templateUrl: './training-sheet-form.component.html',
 	styleUrl: './training-sheet-form.component.scss'
@@ -46,7 +50,6 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 		{value: 'A', description: 'Ativo'},
 		{value: 'I', description: 'Inativo'}
 	];
-
 	dropdownClients: any = [];
 	dropdownExercises: any = [];
 
@@ -54,15 +57,20 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 
 	id: number | null = null;
 	form!: FormGroup;
+	modalForm!: FormGroup;
 	readonly: boolean = false;
 	data: any = null;
 	headerTitle: string = '';
 	actionType: string = 'create';
 
 	exercises: TrainingSheetExercise[] = [];
+	exercise: TrainingSheetExercise = {};
 	selectedExercises: TrainingSheetExercise[] = [];
 	cols: any[] = [];
 	rowsPerPageOptions = [5, 10, 20];
+
+	submitted: boolean = false;
+	exerciseDialog: boolean = false;
 
 	private subscriptions: Subscription[] = [];
 
@@ -137,8 +145,43 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 		// TODO: Implementar lógica de exclusão
 	}
 
+	hideDialog() {
+		this.exerciseDialog = false;
+		this.submitted = false;
+	}
+
+	saveExercise() {
+		this.submitted = true;
+
+		if (this.modalForm.invalid) {
+			return;
+		}
+
+		const newExercise = this.modalForm.value;
+		this.exercises.push(newExercise);
+
+		this.exercises = [...this.exercises];
+
+		const exerciseDropdown = this.dropdownExercises.find((e: any) => e.value === newExercise.exercise_id);
+		if (exerciseDropdown) {
+			newExercise.exercise_description = exerciseDropdown.description;
+			newExercise.body_group_description = this.bodyGroups[exerciseDropdown.body_group_id] || '';
+		} else {
+			newExercise.exercise_description = '';
+			newExercise.body_group_description = '';
+		}
+
+		this.toastService.showToast('success', 'Sucesso', 'Exercício adicionado', 3000);
+
+		this.exerciseDialog = false;
+		this.submitted = false;
+		this.modalForm.reset();
+	}
+
 	openNewExerciseModal() {
-		// TODO: Implementar lógica para abrir modal de novo exercício
+		this.exercise = {};
+		this.submitted = false;
+		this.exerciseDialog = true;
 	}
 
 	generateTrainingSheetWithAI() {
@@ -188,6 +231,16 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 				end_date: new FormControl(null, [Validators.required]),
 				status: new FormControl(null, [Validators.required]),
 				exercises: new FormControl(null, [Validators.required]),
+			}
+		);
+
+		this.modalForm = this.fb.group(
+			{
+				exercise_id: new FormControl(null, [Validators.required]),
+				series: new FormControl(null, [Validators.required]),
+				repetitions: new FormControl(null, [Validators.required]),
+				weight: new FormControl(null, [Validators.required]),
+				order: new FormControl(null, [Validators.required]),
 			}
 		);
 	}

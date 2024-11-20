@@ -174,6 +174,59 @@
 	</div>
 </div>
 
-<ng-template pTemplate="material-icon-robot">
-	<span class="material-icons">smart_toy</span>
-</ng-template>
+<p-dialog [(visible)]="exerciseDialog" [style]="{width: '450px'}" header="Detalhes do exercício" [modal]="true" class="p-fluid">
+	<ng-template pTemplate="content">
+		<form [formGroup]="modalForm">
+			<div class="field col-12 md:col-12"> <!-- EXERCISE -->
+				<label htmlFor="exercise_id">Exercício *</label>
+				<p-dropdown [readonly]="readonly" [required]="true" formControlName="exercise_id" id="exercise_id" [options]="dropdownExercises" placeholder="Selecione um exercício" [showClear]="true" [filter]="true" [filterBy]="'description'" optionValue="value" optionLabel="description"></p-dropdown>
+				<small class="p-error block"
+					   *ngIf="form.get('exercise_id')?.invalid && form.get('exercise_id')?.dirty"
+				>
+					Exercício é obrigatório!
+				</small>
+			</div> <!-- EXERCISE -->
+			<div class="field col-12 md:col-12">  <!-- SERIES -->
+				<label htmlFor="training_frequency">Séries *</label>
+				<p-inputNumber [readonly]="readonly" [required]="true" formControlName="series" id="series" mode="decimal" [showButtons]="true" [buttonLayout]="'stacked'" [min]="1" />
+				<small class="p-error block"
+					   *ngIf="form.get('series')?.invalid && form.get('series')?.dirty"
+				>
+					Séries é obrigatório!
+				</small>
+			</div> <!-- SERIES -->
+			<div class="field col-12 md:col-12">  <!-- REPETITIONS -->
+				<label htmlFor="training_frequency">Repetições *</label>
+				<p-inputNumber [readonly]="readonly" [required]="true" formControlName="repetitions" id="repetitions" mode="decimal" [showButtons]="true" [buttonLayout]="'stacked'" [min]="1" />
+				<small class="p-error block"
+					   *ngIf="form.get('repetitions')?.invalid && form.get('repetitions')?.dirty"
+				>
+					Repetições é obrigatório!
+				</small>
+			</div> <!-- REPETITIONS -->
+			<div class="field col-12 md:col-12">  <!-- WEIGHT -->
+				<label htmlFor="weight">Peso *</label>
+				<p-inputNumber [readonly]="readonly" [required]="true" formControlName="weight" id="weight" mode="decimal" [maxFractionDigits]="2" />
+				<small class="p-error block"
+					   *ngIf="form.get('weight')?.invalid && form.get('weight')?.dirty"
+				>
+					Peso é obrigatório!
+				</small>
+			</div> <!-- WEIGHT -->
+			<div class="field col-12 md:col-12">  <!-- ORDER -->
+				<label htmlFor="training_frequency">Ordem *</label>
+				<p-inputNumber [readonly]="readonly" [required]="true" formControlName="order" id="order" mode="decimal" [showButtons]="true" [buttonLayout]="'stacked'" [min]="1" />
+				<small class="p-error block"
+					   *ngIf="form.get('order')?.invalid && form.get('order')?.dirty"
+				>
+					Ordem é obrigatório!
+				</small>
+			</div> <!-- ORDER -->
+		</form>
+	</ng-template>
+
+	<ng-template pTemplate="footer">
+		<button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+		<button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" [disabled]="modalForm.invalid" (click)="saveExercise()"></button>
+	</ng-template>
+</p-dialog>
