@@ -138,7 +138,9 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 	}
 
 	editTrainingSheetExercise(exercise: TrainingSheetExercise) {
-		// TODO: Implementar lógica de edição
+		this.exercise = {...exercise};
+		this.modalForm.patchValue(this.exercise);
+		this.exerciseDialog = true;
 	}
 
 	deleteTrainingSheetExercise(exercise: TrainingSheetExercise) {
@@ -157,21 +159,31 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 			return;
 		}
 
-		const newExercise = this.modalForm.value;
-		this.exercises.push(newExercise);
+		const updatedExercise = this.modalForm.value;
+		updatedExercise.control_id = this.exercise.control_id;
+
+		const exerciseDropdown = this.dropdownExercises.find((e: any) => e.value === updatedExercise.exercise_id);
+		if (exerciseDropdown) {
+			updatedExercise.exercise_description = exerciseDropdown.description;
+			updatedExercise.body_group_description = this.bodyGroups[exerciseDropdown.body_group_id] || '';
+		} else {
+			updatedExercise.exercise_description = '';
+			updatedExercise.body_group_description = '';
+		}
+
+		const exerciseIndex = this.exercises.findIndex(ex => ex.control_id === updatedExercise.control_id);
+
+		let toastMessage = 'Exercício adicionado';
+		if (exerciseIndex !== -1) {
+			this.exercises[exerciseIndex] = { ...updatedExercise };
+			toastMessage = 'Exercício atualizado';
+		} else {
+			this.exercises.push(updatedExercise);
+		}
 
 		this.exercises = [...this.exercises];
 
-		const exerciseDropdown = this.dropdownExercises.find((e: any) => e.value === newExercise.exercise_id);
-		if (exerciseDropdown) {
-			newExercise.exercise_description = exerciseDropdown.description;
-			newExercise.body_group_description = this.bodyGroups[exerciseDropdown.body_group_id] || '';
-		} else {
-			newExercise.exercise_description = '';
-			newExercise.body_group_description = '';
-		}
-
-		this.toastService.showToast('success', 'Sucesso', 'Exercício adicionado', 3000);
+		this.toastService.showToast('success', 'Sucesso', toastMessage, 3000);
 
 		this.exerciseDialog = false;
 		this.submitted = false;
@@ -179,7 +191,8 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 	}
 
 	openNewExerciseModal() {
-		this.exercise = {};
+		const maxControlId = this.exercises.length > 0 ? Math.max(...this.exercises.map(ex => ex.control_id || 0)) : 0;
+		this.exercise = { control_id: maxControlId + 1 }; // Assign a unique control_id
 		this.submitted = false;
 		this.exerciseDialog = true;
 	}
