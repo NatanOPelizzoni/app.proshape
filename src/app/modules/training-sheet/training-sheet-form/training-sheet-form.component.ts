@@ -184,6 +184,7 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 	hideDialog() {
 		this.exerciseDialog = false;
 		this.submitted = false;
+		this.modalForm.reset();
 	}
 
 	saveExercise() {
@@ -282,8 +283,8 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 				exercise_id: new FormControl(null, [Validators.required]),
 				series: new FormControl(null, [Validators.required]),
 				repetitions: new FormControl(null, [Validators.required]),
-				weight: new FormControl(null, []),
-				order: new FormControl(null, []),
+				weight: new FormControl(null),
+				order: new FormControl(null),
 			}
 		);
 	}
