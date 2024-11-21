@@ -158,6 +158,7 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 		} else {
 			this.exercises = this.exercises.filter(ex => ex.exercise_id !== exercise.exercise_id);
 		}
+		this._updateFormExercises();
 		this.deleteExerciseDialog = false;
 		this.toastService.showToast('success', 'Sucesso', 'Exercício removido', 3000);
 	}
@@ -175,6 +176,7 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 					this.exercises = this.exercises.filter(ex => ex.exercise_id !== selectedExercise.exercise_id);
 				}
 			});
+			this._updateFormExercises();
 			this.toastService.showToast('success', 'Sucesso', 'Exercícios selecionados excluídos', 3000);
 			this.selectedExercises = [];
 			this.deleteExercisesDialog = false;
@@ -217,6 +219,7 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 		}
 
 		this.exercises = [...this.exercises];
+		this._updateFormExercises();
 
 		this.toastService.showToast('success', 'Sucesso', toastMessage, 3000);
 
@@ -438,5 +441,11 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 		}
 
 		this._populate();
+	}
+
+	private _updateFormExercises() {
+		this.form.patchValue({
+			exercises: JSON.stringify(this.exercises)
+		});
 	}
 }
