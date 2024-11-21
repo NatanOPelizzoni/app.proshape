@@ -9,6 +9,8 @@ import { BodyGroupComponent } from "./modules/body-group/body-group.component";
 import { BodyGroupFormComponent } from "./modules/body-group/body-group-form/body-group-form.component";
 import { ExerciseComponent } from "./modules/exercise/exercise.component";
 import { ExerciseFormComponent } from "./modules/exercise/exercise-form/exercise-form.component";
+import { TrainingSheetComponent } from "./modules/training-sheet/training-sheet.component";
+import { TrainingSheetFormComponent } from "./modules/training-sheet/training-sheet-form/training-sheet-form.component";
 
 export const routes: Routes = [
 	{
@@ -89,6 +91,24 @@ export const routes: Routes = [
 			{
 				path: 'exercise/:id/view',
 				component: ExerciseFormComponent
+			},
+
+			// Training Sheet routes
+			{
+				path: 'training-sheet',
+				component: TrainingSheetComponent
+			},
+			{
+				path: 'training-sheet/create',
+				component: TrainingSheetFormComponent
+			},
+			{
+				path: 'training-sheet/:id/update',
+				component: TrainingSheetFormComponent
+			},
+			{
+				path: 'training-sheet/:id/view',
+				component: TrainingSheetFormComponent
 			},
 		]
 	}

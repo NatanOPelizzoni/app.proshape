@@ -1,0 +1,244 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card px-6 py-6">
+			<p-toolbar styleClass="mb-4">
+				<ng-template pTemplate="left">
+				</ng-template>
+				<ng-template pTemplate="right">
+					<div class="my-2">
+						<button pButton pRipple label="Voltar" icon="pi pi-arrow-left" class="p-button-default mr-2" (click)="redirectToList()"></button>
+						<button *ngIf="!readonly" pButton pRipple label="Salvar" icon="pi pi-save" class="p-button-success" [disabled]="form.invalid" (click)="save()"></button>
+						<button *ngIf="readonly" pButton pRipple label="Editar" icon="pi pi-pencil" class="p-button-warning" [disabled]="!readonly" (click)="redirectToEdit()"></button>
+					</div>
+				</ng-template>
+			</p-toolbar>
+
+			<div class="col-12">
+				<form [formGroup]="form">
+					<div class="card">
+						<h5>{{ headerTitle }}</h5>
+						<div class="p-fluid p-formgrid grid">
+							<div class="field col-12 md:col-3"> <!-- CLIENT -->
+								<label htmlFor="client_id">Cliente *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="client_id" [options]="dropdownClients" placeholder="Selecione um cliente" [showClear]="true" [filter]="true" [filterBy]="'description'" optionValue="value" optionLabel="description"></p-dropdown>
+								<small class="p-error block"
+									   *ngIf="form.get('client_id')?.invalid && form.get('client_id')?.dirty"
+								>
+									Cliente é obrigatório!
+								</small>
+							</div> <!-- CLIENT -->
+							<div class="field col-12 md:col-3"> <!-- START DATE -->
+								<label htmlFor="start_date">Data de início *</label>
+								<p-calendar [readonlyInput]="readonly" [required]="true" [dateFormat]="'dd/mm/yy'" [showClear]="true" formControlName="start_date" id="start_date"/>
+								<small class="p-error block"
+									   *ngIf="form.get('start_date')?.invalid && form.get('start_date')?.dirty"
+								>
+									Data de início é obrigatório!
+								</small>
+							</div> <!-- START DATE -->
+							<div class="field col-12 md:col-3"> <!-- END DATE -->
+								<label htmlFor="end_date">Data de término *</label>
+								<p-calendar [readonlyInput]="readonly" [required]="true" [dateFormat]="'dd/mm/yy'" [showClear]="true" formControlName="end_date" id="end_date"/>
+								<small class="p-error block"
+									   *ngIf="form.get('end_date')?.invalid && form.get('end_date')?.dirty"
+								>
+									Data de término é obrigatório!
+								</small>
+							</div> <!-- END DATE -->
+							<div class="field col-12 md:col-3"> <!-- STATUS -->
+								<label htmlFor="status">Status *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="status" [options]="dropdownStatus" placeholder="Selecione um status" [showClear]="true" optionValue="value" optionLabel="description"></p-dropdown>
+								<small class="p-error block"
+									   *ngIf="form.get('status')?.invalid && form.get('status')?.dirty"
+								>
+									Status é obrigatório!
+								</small>
+							</div> <!-- STATUS -->
+
+							<div class="field col-12 md:col-12"> <!-- EXERCISE -->
+								<p-table #dt
+										 [value]="exercises"
+										 [columns]="cols"
+										 responsiveLayout="scroll"
+										 [rows]="10"
+										 [globalFilterFields]="['exercise_description', 'body_group_description', 'series', 'repetitions', 'weight', 'order']"
+										 [paginator]="true"
+										 [rowsPerPageOptions]="rowsPerPageOptions"
+										 [showCurrentPageReport]="true"
+										 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+										 [(selection)]="selectedExercises"
+										 selectionMode="multiple"
+										 [rowHover]="true"
+										 dataKey="control_id"
+								>
+									<ng-template pTemplate="caption">
+										<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+											<h5 class="m-0">Exercícios</h5>
+											<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+												<div>
+													<span class="block mt-2 md:mt-0 p-input-icon-left">
+														<i class="pi pi-search"></i>
+														<input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." class="w-full sm:w-auto"/>
+													</span>
+												</div>
+												<div>
+													<button *ngIf="!readonly" pButton pRipple class="p-button-default p-button-icon-only m-1" pTooltip="Gerar treino com IA" tooltipPosition="top" (click)="generateTrainingSheetWithAI()">
+														<i class="fas fa-robot"></i>
+													</button>
+													<button *ngIf="!readonly" pButton pRipple class="p-button-danger p-button-icon-only m-1" pTooltip="Remover exercícios selecionados" tooltipPosition="top" (click)="openRemoveSelectedExercisesDialog()"  [disabled]="!selectedExercises || !selectedExercises.length">
+														<i class="fas fa-trash"></i>
+													</button>
+													<button *ngIf="!readonly" pButton pRipple class="p-button-success p-button-icon-only m-1" pTooltip="Adicionar exercício" tooltipPosition="top" (click)="openNewExerciseModal()">
+														<i class="fas fa-plus"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</ng-template>
+									<ng-template pTemplate="header">
+										<tr>
+											<th style="width: 3rem">
+												<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+											</th>
+											<th pSortableColumn="exercise_description">
+												Exercício
+												<p-sortIcon field="exercise_description"></p-sortIcon>
+											</th>
+											<th pSortableColumn="bodyGroup">
+												Grupo Muscular
+												<p-sortIcon field="bodyGroup"></p-sortIcon>
+											</th>
+											<th pSortableColumn="series">
+												Séries
+												<p-sortIcon field="series"></p-sortIcon>
+											</th>
+											<th pSortableColumn="repetitions">
+												Repetições
+												<p-sortIcon field="repetitions"></p-sortIcon>
+											</th>
+											<th pSortableColumn="weight">
+												Peso
+												<p-sortIcon field="weight"></p-sortIcon>
+											</th>
+											<th pSortableColumn="order">
+												Ordem
+												<p-sortIcon field="order"></p-sortIcon>
+											</th>
+											<th></th>
+										</tr>
+									</ng-template>
+									<ng-template pTemplate="body" let-exercise>
+										<tr>
+											<td>
+												<p-tableCheckbox [value]="exercise"></p-tableCheckbox>
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Exercício</span>
+												{{ exercise.exercise_description }}
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Grupo Musuclar</span>
+												{{ exercise.body_group_description }}
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Séries</span>
+												{{ exercise.series }}
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Repetições</span>
+												{{ exercise.repetitions }}
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Peso</span>
+												{{ exercise.weight }}
+											</td>
+											<td style="width:14%; min-width:10rem;">
+												<span class="p-column-title">Ordem</span>
+												{{ exercise.order }}
+											</td>
+											<td>
+												<div class="flex">
+													<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editTrainingSheetExercise(exercise)"></button>
+													<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="openRemoveExerciseDialog(exercise)"></button>
+												</div>
+											</td>
+										</tr>
+									</ng-template>
+								</p-table>
+							</div> <!-- EXERCISES -->
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<p-dialog [(visible)]="exerciseDialog" [style]="{width: '450px'}" header="Detalhes do exercício" [modal]="true" class="p-fluid">
+	<ng-template pTemplate="content">
+		<form [formGroup]="modalForm">
+			<div class="field col-12 md:col-12"> <!-- EXERCISE -->
+				<label htmlFor="exercise_id">Exercício *</label>
+				<p-dropdown [readonly]="readonly" [required]="true" formControlName="exercise_id" id="exercise_id" [options]="dropdownExercises" placeholder="Selecione um exercício" [showClear]="true" [filter]="true" [filterBy]="'description'" optionValue="value" optionLabel="description"></p-dropdown>
+				<small class="p-error block"
+					   *ngIf="modalForm.get('exercise_id')?.invalid && modalForm.get('exercise_id')?.dirty"
+				>
+					Exercício é obrigatório!
+				</small>
+			</div> <!-- EXERCISE -->
+			<div class="field col-12 md:col-12">  <!-- SERIES -->
+				<label htmlFor="training_frequency">Séries *</label>
+				<p-inputNumber [readonly]="readonly" [required]="true" formControlName="series" id="series" mode="decimal" [showButtons]="true" [buttonLayout]="'stacked'" [min]="1" />
+				<small class="p-error block"
+					   *ngIf="modalForm.get('series')?.invalid && modalForm.get('series')?.dirty"
+				>
+					Séries é obrigatório!
+				</small>
+			</div> <!-- SERIES -->
+			<div class="field col-12 md:col-12">  <!-- REPETITIONS -->
+				<label htmlFor="training_frequency">Repetições *</label>
+				<p-inputNumber [readonly]="readonly" [required]="true" formControlName="repetitions" id="repetitions" mode="decimal" [showButtons]="true" [buttonLayout]="'stacked'" [min]="1" />
+				<small class="p-error block"
+					   *ngIf="modalForm.get('repetitions')?.invalid && modalForm.get('repetitions')?.dirty"
+				>
+					Repetições é obrigatório!
+				</small>
+			</div> <!-- REPETITIONS -->
+			<div class="field col-12 md:col-12">  <!-- WEIGHT -->
+				<label htmlFor="weight">Peso</label>
+				<p-inputNumber [readonly]="readonly" formControlName="weight" id="weight" mode="decimal" [maxFractionDigits]="2" />
+			</div> <!-- WEIGHT -->
+			<div class="field col-12 md:col-12">  <!-- ORDER -->
+				<label htmlFor="training_frequency">Ordem</label>
+				<p-inputNumber [readonly]="readonly" formControlName="order" id="order" mode="decimal" [showButtons]="true" [buttonLayout]="'stacked'" [min]="1" />
+			</div> <!-- ORDER -->
+		</form>
+	</ng-template>
+
+	<ng-template pTemplate="footer">
+		<button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+		<button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" [disabled]="modalForm.invalid" (click)="saveExercise()"></button>
+	</ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="deleteExerciseDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+	<div class="flex align-items-center justify-content-center">
+		<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+		<span> Tem certeza de que deseja remover o exercício da ficha de treino?</span>
+	</div>
+	<ng-template pTemplate="footer">
+		<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteExerciseDialog = false"></button>
+		<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmRemoveExercise(exercise)"></button>
+	</ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="deleteExercisesDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+	<div class="flex align-items-center justify-content-center">
+		<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+		<span>Tem certeza de que deseja remover todos os exercícios selecionados?</span>
+	</div>
+	<ng-template pTemplate="footer">
+		<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteExercisesDialog = false"></button>
+		<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmRemoveSelectedExercise()"></button>
+	</ng-template>
+</p-dialog>

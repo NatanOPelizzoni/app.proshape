@@ -37,7 +37,7 @@
 								</small>
 							</div> <!-- STATUS -->
 							<div class="field col-12 md:col-3"> <!-- BODY GROUP -->
-								<label htmlFor="body_group_id">Instrutor *</label>
+								<label htmlFor="body_group_id">Grupo Muscular *</label>
 								<p-dropdown [readonly]="readonly" [required]="true" formControlName="body_group_id" [options]="dropdownBodyGroups" placeholder="Selecione um grupo muscular" [showClear]="true" [filter]="true" [filterBy]="'description'" optionValue="value" optionLabel="description"></p-dropdown>
 								<small class="p-error block"
 									   *ngIf="form.get('body_group_id')?.invalid && form.get('body_group_id')?.dirty"

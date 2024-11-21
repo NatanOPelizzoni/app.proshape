@@ -1,0 +1,126 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card px-6 py-6">
+			<p-toolbar styleClass="mb-4">
+				<ng-template pTemplate="left">
+				</ng-template>
+				<ng-template pTemplate="right">
+					<div class="my-2">
+						<button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+						<button pButton pRipple label="Deletar selecionados" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedTrainingSheets()" [disabled]="!selectedTrainingSheets || !selectedTrainingSheets.length"></button>
+					</div>
+				</ng-template>
+			</p-toolbar>
+
+			<p-table #dt
+					 [value]="trainingSheets"
+					 [columns]="cols"
+					 responsiveLayout="scroll"
+					 [rows]="10"
+					 [globalFilterFields]="['id','clientName','startDate','endDate','status']"
+					 [paginator]="true"
+					 [rowsPerPageOptions]="rowsPerPageOptions"
+					 [showCurrentPageReport]="true"
+					 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+					 [(selection)]="selectedTrainingSheets"
+					 selectionMode="multiple"
+					 [rowHover]="true"
+					 dataKey="id"
+			>
+				<ng-template pTemplate="caption">
+					<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+						<h5 class="m-0">Fichas de Treino</h5>
+						<span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." class="w-full sm:w-auto"/>
+                        </span>
+					</div>
+				</ng-template>
+				<ng-template pTemplate="header">
+					<tr>
+						<th style="width: 3rem">
+							<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+						</th>
+						<th pSortableColumn="id">
+							ID
+							<p-sortIcon field="id"></p-sortIcon>
+						</th>
+						<th pSortableColumn="clientName">
+							Cliente
+							<p-sortIcon field="clientName"></p-sortIcon>
+						</th>
+						<th pSortableColumn="startDate">
+							Data de Início
+							<p-sortIcon field="startDate"></p-sortIcon>
+						</th>
+						<th pSortableColumn="endDate">
+							Data de Término
+							<p-sortIcon field="endDate"></p-sortIcon>
+						</th>
+						<th pSortableColumn="status">
+							Status
+							<p-sortIcon field="status"></p-sortIcon>
+						</th>
+						<th></th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-trainingSheet>
+					<tr>
+						<td>
+							<p-tableCheckbox [value]="trainingSheet"></p-tableCheckbox>
+						</td>
+						<td style="width:5%; min-width:5rem;">
+							<span class="p-column-title">ID</span>
+							{{ trainingSheet.id }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Cliente</span>
+							{{ trainingSheet.client_name }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Data de Início</span>
+							{{ trainingSheet.start_date_formatted }}
+						</td>
+						<td style="width:14%; min-width:10rem;">
+							<span class="p-column-title">Data de Término</span>
+							{{ trainingSheet.end_date_formatted }}
+						</td>
+						<td style="width:14%; min-width: 10rem;">
+							<span class="p-column-title">Status</span>
+							<span [class]="'status-badge status-' + (trainingSheet.status === 'A' ? 'active' : 'inactive')">{{ trainingSheet.status === 'A' ? 'ATIVO' : 'INATIVO' }}</span>
+						</td>
+						<td>
+							<div class="flex">
+								<button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-default mr-2" (click)="viewTrainingSheet(trainingSheet)"></button>
+								<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editTrainingSheet(trainingSheet)"></button>
+								<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteTrainingSheet(trainingSheet)"></button>
+							</div>
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+
+		<p-dialog [(visible)]="deleteTrainingSheetDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+			<div class="flex align-items-center justify-content-center">
+				<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+				<span *ngIf="trainingSheet"> Tem certeza de que deseja excluir a ficha de treino do(a)<b>{{trainingSheet.client_name}}</b>?</span>
+			</div>
+			<ng-template pTemplate="footer">
+				<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteTrainingSheetDialog = false"></button>
+				<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDelete()"></button>
+			</ng-template>
+		</p-dialog>
+
+		<p-dialog [(visible)]="deleteTrainingSheetsDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+			<div class="flex align-items-center justify-content-center">
+				<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+				<span>Tem certeza de que deseja excluir as fichas de treino selecionadas?</span>
+			</div>
+			<ng-template pTemplate="footer">
+				<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteTrainingSheetsDialog = false"></button>
+				<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDeleteSelected()"></button>
+			</ng-template>
+		</p-dialog>
+	</div>
+</div>
