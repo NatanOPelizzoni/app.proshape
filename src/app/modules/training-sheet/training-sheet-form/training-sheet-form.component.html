@@ -61,7 +61,7 @@
 										 [columns]="cols"
 										 responsiveLayout="scroll"
 										 [rows]="10"
-										 [globalFilterFields]="['exercise_description', 'body_group_description', 'series', 'repetitions', 'wight', 'order']"
+										 [globalFilterFields]="['exercise_description', 'body_group_description', 'series', 'repetitions', 'weight', 'order']"
 										 [paginator]="true"
 										 [rowsPerPageOptions]="rowsPerPageOptions"
 										 [showCurrentPageReport]="true"
@@ -69,7 +69,7 @@
 										 [(selection)]="selectedExercises"
 										 selectionMode="multiple"
 										 [rowHover]="true"
-										 dataKey="id"
+										 dataKey="control_id"
 								>
 									<ng-template pTemplate="caption">
 										<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
@@ -85,7 +85,7 @@
 													<button *ngIf="!readonly" pButton pRipple class="p-button-default p-button-icon-only m-1" pTooltip="Gerar treino com IA" tooltipPosition="top" (click)="generateTrainingSheetWithAI()">
 														<i class="fas fa-robot"></i>
 													</button>
-													<button *ngIf="!readonly" pButton pRipple class="p-button-danger p-button-icon-only m-1" pTooltip="Remover exercícios selecionados" tooltipPosition="top" (click)="removeSelectedExercise()"  [disabled]="!selectedExercises || !selectedExercises.length">
+													<button *ngIf="!readonly" pButton pRipple class="p-button-danger p-button-icon-only m-1" pTooltip="Remover exercícios selecionados" tooltipPosition="top" (click)="openRemoveSelectedExercisesDialog()"  [disabled]="!selectedExercises || !selectedExercises.length">
 														<i class="fas fa-trash"></i>
 													</button>
 													<button *ngIf="!readonly" pButton pRipple class="p-button-success p-button-icon-only m-1" pTooltip="Adicionar exercício" tooltipPosition="top" (click)="openNewExerciseModal()">
@@ -159,7 +159,7 @@
 											<td>
 												<div class="flex">
 													<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editTrainingSheetExercise(exercise)"></button>
-													<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteTrainingSheetExercise(exercise)"></button>
+													<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="openRemoveExerciseDialog(exercise)"></button>
 												</div>
 											</td>
 										</tr>
@@ -228,5 +228,27 @@
 	<ng-template pTemplate="footer">
 		<button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
 		<button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" [disabled]="modalForm.invalid" (click)="saveExercise()"></button>
+	</ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="deleteExerciseDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+	<div class="flex align-items-center justify-content-center">
+		<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+		<span> Tem certeza de que deseja remover o exercício da ficha de treino?</span>
+	</div>
+	<ng-template pTemplate="footer">
+		<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteExerciseDialog = false"></button>
+		<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmRemoveExercise(exercise)"></button>
+	</ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="deleteExercisesDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+	<div class="flex align-items-center justify-content-center">
+		<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+		<span>Tem certeza de que deseja remover todos os exercícios selecionados?</span>
+	</div>
+	<ng-template pTemplate="footer">
+		<button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteExercisesDialog = false"></button>
+		<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmRemoveSelectedExercise()"></button>
 	</ng-template>
 </p-dialog>

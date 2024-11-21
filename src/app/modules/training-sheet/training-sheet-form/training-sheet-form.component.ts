@@ -66,6 +66,10 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 	exercises: TrainingSheetExercise[] = [];
 	exercise: TrainingSheetExercise = {};
 	selectedExercises: TrainingSheetExercise[] = [];
+
+	deleteExerciseDialog: boolean = false;
+	deleteExercisesDialog: boolean = false;
+
 	cols: any[] = [];
 	rowsPerPageOptions = [5, 10, 20];
 
@@ -143,8 +147,38 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 		this.exerciseDialog = true;
 	}
 
-	deleteTrainingSheetExercise(exercise: TrainingSheetExercise) {
-		// TODO: Implementar lógica de exclusão
+	openRemoveExerciseDialog(exercise: TrainingSheetExercise) {
+		this.exercise = {...exercise};
+		this.deleteExerciseDialog = true;
+	}
+
+	confirmRemoveExercise(exercise: TrainingSheetExercise) {
+		if (exercise.control_id) {
+			this.exercises = this.exercises.filter(ex => ex.control_id !== exercise.control_id);
+		} else {
+			this.exercises = this.exercises.filter(ex => ex.exercise_id !== exercise.exercise_id);
+		}
+		this.deleteExerciseDialog = false;
+		this.toastService.showToast('success', 'Sucesso', 'Exercício removido', 3000);
+	}
+
+	openRemoveSelectedExercisesDialog() {
+		this.deleteExercisesDialog = true;
+	}
+
+	confirmRemoveSelectedExercise() {
+		if (this.selectedExercises && this.selectedExercises.length) {
+			this.selectedExercises.forEach(selectedExercise => {
+				if (selectedExercise.control_id) {
+					this.exercises = this.exercises.filter(ex => ex.control_id !== selectedExercise.control_id);
+				} else {
+					this.exercises = this.exercises.filter(ex => ex.exercise_id !== selectedExercise.exercise_id);
+				}
+			});
+			this.toastService.showToast('success', 'Sucesso', 'Exercícios selecionados excluídos', 3000);
+			this.selectedExercises = [];
+			this.deleteExercisesDialog = false;
+		}
 	}
 
 	hideDialog() {
@@ -201,10 +235,6 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 		// TODO: Implementar lógica para gerar ficha de treino com IA
 	}
 
-	removeSelectedExercise() {
-		// TODO: Implementar lógica para remover exercício selecionado
-	}
-
 	private _initializeData() {
 		forkJoin({
 			clients: this._getClients(),
@@ -252,8 +282,8 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 				exercise_id: new FormControl(null, [Validators.required]),
 				series: new FormControl(null, [Validators.required]),
 				repetitions: new FormControl(null, [Validators.required]),
-				weight: new FormControl(null, [Validators.required]),
-				order: new FormControl(null, [Validators.required]),
+				weight: new FormControl(null, []),
+				order: new FormControl(null, []),
 			}
 		);
 	}
@@ -389,7 +419,12 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 				this.exercises = Array.isArray(this.data.exercises) ? this.data.exercises : [];
 			}
 
+			// Generate a unique control_id for exercises without one
+			let maxControlId = this.exercises.length > 0 ? Math.max(...this.exercises.map(ex => ex.control_id || 0)) : 0;
 			this.exercises.forEach(exercise => {
+				if (!exercise.control_id) {
+					exercise.control_id = ++maxControlId;
+				}
 				const exerciseDropdown = this.dropdownExercises.find((e: any) => e.value === exercise.exercise_id);
 				if (exerciseDropdown) {
 					exercise.exercise_description = exerciseDropdown.description;
