@@ -1,0 +1,358 @@
+{
+	"data": [
+		{
+			"id": 1,
+			"name": "Supino Reto",
+			"status": "A",
+			"body_group_id": 1
+		},
+		{
+			"id": 2,
+			"name": "Supino Inclinado",
+			"status": "A",
+			"body_group_id": 1
+		},
+		{
+			"id": 3,
+			"name": "Voador",
+			"status": "A",
+			"body_group_id": 1
+		},
+		{
+			"id": 4,
+			"name": "Supino com Halteres",
+			"status": "A",
+			"body_group_id": 1
+		},
+		{
+			"id": 5,
+			"name": "Crucifixo Reto",
+			"status": "A",
+			"body_group_id": 1
+		},
+		{
+			"id": 6,
+			"name": "Crucifixo Inclinado",
+			"status": "A",
+			"body_group_id": 1
+		},
+		{
+			"id": 7,
+			"name": "Supino Declinado",
+			"status": "A",
+			"body_group_id": 1
+		},
+		{
+			"id": 8,
+			"name": "Cross Over",
+			"status": "A",
+			"body_group_id": 1
+		},
+		{
+			"id": 9,
+			"name": "Apoio",
+			"status": "A",
+			"body_group_id": 1
+		},
+		{
+			"id": 10,
+			"name": "Barra Livre",
+			"status": "A",
+			"body_group_id": 2
+		},
+		{
+			"id": 11,
+			"name": "Polia - Puxada Atrás",
+			"status": "A",
+			"body_group_id": 2
+		},
+		{
+			"id": 12,
+			"name": "Polia - Puxada Frente",
+			"status": "A",
+			"body_group_id": 2
+		},
+		{
+			"id": 13,
+			"name": "Remada Baixa",
+			"status": "A",
+			"body_group_id": 2
+		},
+		{
+			"id": 14,
+			"name": "Remada Alta",
+			"status": "A",
+			"body_group_id": 2
+		},
+		{
+			"id": 15,
+			"name": "Serrote",
+			"status": "A",
+			"body_group_id": 2
+		},
+		{
+			"id": 16,
+			"name": "Crucifixo Inverso",
+			"status": "A",
+			"body_group_id": 2
+		},
+		{
+			"id": 17,
+			"name": "Remada Cavalinho",
+			"status": "A",
+			"body_group_id": 2
+		},
+		{
+			"id": 18,
+			"name": "Remada Curvada",
+			"status": "A",
+			"body_group_id": 2
+		},
+		{
+			"id": 19,
+			"name": "Desenvolvimento com Barra",
+			"status": "A",
+			"body_group_id": 3
+		},
+		{
+			"id": 20,
+			"name": "Desenvolvimento com Halter",
+			"status": "A",
+			"body_group_id": 3
+		},
+		{
+			"id": 21,
+			"name": "Elevação Lateral",
+			"status": "A",
+			"body_group_id": 3
+		},
+		{
+			"id": 22,
+			"name": "Elevação Frontal",
+			"status": "A",
+			"body_group_id": 3
+		},
+		{
+			"id": 23,
+			"name": "Remada Alta",
+			"status": "A",
+			"body_group_id": 3
+		},
+		{
+			"id": 24,
+			"name": "Encolhimento Ombro",
+			"status": "A",
+			"body_group_id": 3
+		},
+		{
+			"id": 25,
+			"name": "Rosca Direta",
+			"status": "A",
+			"body_group_id": 4
+		},
+		{
+			"id": 26,
+			"name": "Rosca Scott",
+			"status": "A",
+			"body_group_id": 4
+		},
+		{
+			"id": 27,
+			"name": "Rosca Concentrada",
+			"status": "A",
+			"body_group_id": 4
+		},
+		{
+			"id": 28,
+			"name": "Rosca Alternada",
+			"status": "A",
+			"body_group_id": 4
+		},
+		{
+			"id": 29,
+			"name": "Rosca Inversa",
+			"status": "A",
+			"body_group_id": 4
+		},
+		{
+			"id": 30,
+			"name": "Rosca no Cross Over",
+			"status": "A",
+			"body_group_id": 4
+		},
+		{
+			"id": 31,
+			"name": "Rosca 21",
+			"status": "A",
+			"body_group_id": 4
+		},
+		{
+			"id": 32,
+			"name": "Cross Uni",
+			"status": "A",
+			"body_group_id": 5
+		},
+		{
+			"id": 33,
+			"name": "Tríceps Testa",
+			"status": "A",
+			"body_group_id": 5
+		},
+		{
+			"id": 34,
+			"name": "Tríceps Entre Bancos",
+			"status": "A",
+			"body_group_id": 5
+		},
+		{
+			"id": 35,
+			"name": "Tríceps Corda",
+			"status": "A",
+			"body_group_id": 5
+		},
+		{
+			"id": 36,
+			"name": "Tríceps no Cross",
+			"status": "A",
+			"body_group_id": 5
+		},
+		{
+			"id": 37,
+			"name": "Tríceps Frânces",
+			"status": "A",
+			"body_group_id": 5
+		},
+		{
+			"id": 38,
+			"name": "Tríceps Coice",
+			"status": "A",
+			"body_group_id": 5
+		},
+		{
+			"id": 39,
+			"name": "Leg 45°",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 40,
+			"name": "Stiff",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 41,
+			"name": "Agachamento",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 42,
+			"name": "Levantamento Terra",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 43,
+			"name": "Afundo",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 44,
+			"name": "Extensão de Perna",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 45,
+			"name": "Flexão de Perna",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 46,
+			"name": "Adução de Coxa",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 47,
+			"name": "Abdução de Coxa",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 48,
+			"name": "Agachamento Banco",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 49,
+			"name": "Panturrilha",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 50,
+			"name": "Hack",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 51,
+			"name": "Agachamento Búlgaro",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 52,
+			"name": "Passada Corredor",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 53,
+			"name": "Sumô",
+			"status": "A",
+			"body_group_id": 6
+		},
+		{
+			"id": 54,
+			"name": "Glúteo Cross Over",
+			"status": "A",
+			"body_group_id": 7
+		},
+		{
+			"id": 55,
+			"name": "Glúteo Máquina de Pé",
+			"status": "A",
+			"body_group_id": 7
+		},
+		{
+			"id": 56,
+			"name": "Glúteo Chão 4 apoios",
+			"status": "A",
+			"body_group_id": 7
+		},
+		{
+			"id": 57,
+			"name": "Elevação pelve",
+			"status": "A",
+			"body_group_id": 7
+		},
+		{
+			"id": 57,
+			"name": "Exercício inativo",
+			"status": "I",
+			"body_group_id": 7
+		},
+		{
+			"id": 57,
+			"name": "Exercício inativo para grupo muscular inativo",
+			"status": "I",
+			"body_group_id": 8
+		}
+	]
+}

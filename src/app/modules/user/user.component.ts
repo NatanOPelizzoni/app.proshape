@@ -1,0 +1,147 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ToastModule } from "primeng/toast";
+import { ToolbarModule } from "primeng/toolbar";
+import { ButtonDirective } from "primeng/button";
+import { Ripple } from "primeng/ripple";
+import { Table, TableModule } from "primeng/table";
+import { User } from "../../data/interfaces/user";
+import { UserService } from "./user.service";
+import { InputTextModule } from "primeng/inputtext";
+import { DialogModule } from "primeng/dialog";
+import { NgIf } from "@angular/common";
+import { Router } from "@angular/router";
+import { ToastService } from "../../shared/services/toast.service";
+import { Subscription } from "rxjs";
+
+@Component({
+	selector: 'app-user',
+	standalone: true,
+	imports: [
+		ToastModule,
+		ToolbarModule,
+		ButtonDirective,
+		Ripple,
+		TableModule,
+		InputTextModule,
+		DialogModule,
+		NgIf
+	],
+	templateUrl: './user.component.html',
+	styleUrl: './user.component.scss'
+})
+export class UserComponent implements OnInit, OnDestroy {
+
+	roles = [
+		{value: 'A', description: 'ADMIN'},
+		{value: 'I', description: 'INSTRUTOR'},
+		{value: 'C', description: 'CLIENTE'}
+	];
+
+	deleteUserDialog: boolean = false;
+
+	deleteUsersDialog: boolean = false;
+
+	users: User[] = [];
+
+	user: User = {};
+
+	selectedUsers: User[] = [];
+
+	cols: any[] = [];
+
+	statuses: any[] = [];
+
+	rowsPerPageOptions = [5, 10, 20];
+
+	private subscriptions: Subscription[] = [];
+
+	constructor(
+		private userService: UserService,
+		private toastService: ToastService,
+		private router: Router,
+	) {
+	}
+
+	ngOnInit() {
+		this.userService.getAll().subscribe((data: User[]) => this.users = data);
+
+		this.cols = [
+			{field: 'id', header: 'ID'},
+			{field: 'name', header: 'Nome'},
+			{field: 'email', header: 'Email'},
+			{field: 'role', header: 'Perfil'},
+			{field: 'status', header: 'Status'},
+		];
+	}
+
+	ngOnDestroy() {
+		this.subscriptions.forEach(element => element.unsubscribe());
+	}
+
+	openNew() {
+		this.router.navigate([`app/user/create`]);
+	}
+
+	editUser(user: User) {
+		this.user = {...user};
+		this.router.navigate([`app/user/${user.id}/update`]);
+	}
+
+	viewUser(user: User) {
+		this.user = {...user};
+		this.router.navigate([`app/user/${user.id}/view`]);
+	}
+
+	deleteUser(user: User) {
+		this.deleteUserDialog = true;
+		this.user = {...user};
+	}
+
+	confirmDelete() {
+		if (this.user.id !== undefined) {
+			const subscription = this.userService.destroy(this.user.id).subscribe(
+				response => {
+					this.users = this.users.filter(val => val.id !== this.user.id);
+					this.user = {};
+					this.toastService.showToast('success', 'Sucesso', 'Usuário deletado', 3000);
+				},
+				error => {
+					this.toastService.showCrudAlerts(error.error.errors);
+				}
+			);
+			this.subscriptions.push(subscription);
+			this.deleteUserDialog = false;
+		}
+	}
+
+	deleteSelectedUsers() {
+		this.deleteUsersDialog = true;
+	}
+
+	confirmDeleteSelected() {
+		const selectedUsersIds = this.selectedUsers.map(val => val.id as number);
+		const subscription = this.userService.massDelete({ids: selectedUsersIds}).subscribe(
+			response => {
+				this.users = this.users.filter(val => !this.selectedUsers.includes(val));
+				this.selectedUsers = [];
+				this.toastService.showToast('success', 'Sucesso', 'Usuários deletados', 3000);
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+			}
+		);
+		this.subscriptions.push(subscription);
+		this.deleteUsersDialog = false;
+	}
+
+	getRoleDescription(roleValue: string): string {
+		// TODO: AJEITAR ESSA FUNÇÃO PARA QUE TRAGA A DESCRIÇÃO DO ROLE DIRETO NA REQUEST
+		//  // POIS ASSIM COMO TA EXECUTA VARIAS VEZES POR ESTAR SENDO CHAMADO DENTRO DO HTML
+		const role = this.roles.find(val => val.value === roleValue);
+		return role ? role.description : '';
+	}
+
+	onGlobalFilter(table: Table, event: Event) {
+		table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+	}
+}

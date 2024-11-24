@@ -1,0 +1,356 @@
+{
+	"data": [
+		{
+			"id": 1,
+			"name": "Admin",
+			"email": "natan2624@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "A"
+		},
+		{
+			"id": 2,
+			"name": "User2",
+			"email": "use2email.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 3,
+			"name": "User3",
+			"email": "use3@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 4,
+			"name": "User4",
+			"email": "use4@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 5,
+			"name": "User5",
+			"email": "use5@gmail.com",
+			"password": "secret",
+			"status": "I",
+			"role": "I"
+		},
+		{
+			"id": 6,
+			"name": "User6",
+			"email": "use6@gmail.com",
+			"password": "secret",
+			"status": "I",
+			"role": "C"
+		},
+		{
+			"id": 7,
+			"name": "User7",
+			"email": "use7@gmail.com",
+			"password": "secret",
+			"status": "I",
+			"role": "I"
+		},
+		{
+			"id": 8,
+			"name": "User8",
+			"email": "use8@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 9,
+			"name": "User9",
+			"email": "use9@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 10,
+			"name": "User10",
+			"email": "user10gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 11,
+			"name": "User11",
+			"email": "user11@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 12,
+			"name": "User12",
+			"email": "user12@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 13,
+			"name": "User13",
+			"email": "user13@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 14,
+			"name": "User14",
+			"email": "user14@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 15,
+			"name": "User15",
+			"email": "user15@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 16,
+			"name": "User16",
+			"email": "user16@gmail.com",
+			"password": "secret",
+			"status": "I",
+			"role": "C"
+		},
+		{
+			"id": 17,
+			"name": "User17",
+			"email": "user17@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 18,
+			"name": "User18",
+			"email": "user18@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 19,
+			"name": "User19",
+			"email": "user19@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 20,
+			"name": "User20",
+			"email": "user20@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 21,
+			"name": "User21",
+			"email": "user21@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 22,
+			"name": "User22",
+			"email": "user22@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 23,
+			"name": "User23",
+			"email": "user23@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 24,
+			"name": "User24",
+			"email": "user24@gmail.com",
+			"password": "secret",
+			"status": "I",
+			"role": "C"
+		},
+		{
+			"id": 25,
+			"name": "User25",
+			"email": "user25@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 26,
+			"name": "User26",
+			"email": "user26@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 27,
+			"name": "User27",
+			"email": "user27@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 28,
+			"name": "User28",
+			"email": "user28@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 29,
+			"name": "User29",
+			"email": "user29@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 30,
+			"name": "User30",
+			"email": "user30@gmail.com",
+			"password": "secret",
+			"status": "I",
+			"role": "C"
+		},
+		{
+			"id": 31,
+			"name": "User31",
+			"email": "user31@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 32,
+			"name": "User32",
+			"email": "user32@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 33,
+			"name": "User33",
+			"email": "user33@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 34,
+			"name": "User34",
+			"email": "user34@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 35,
+			"name": "User35",
+			"email": "user35@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 36,
+			"name": "User36",
+			"email": "user36@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 37,
+			"name": "User37",
+			"email": "user37@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 38,
+			"name": "User38",
+			"email": "user38@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 39,
+			"name": "User39",
+			"email": "user39@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 40,
+			"name": "User40",
+			"email": "user40@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 41,
+			"name": "User41",
+			"email": "user41@gmail.com",
+			"password": "secret",
+			"status": "A",
+			"role": "I"
+		},
+		{
+			"id": 42,
+			"name": "Natan O Pelizzoni",
+			"email": "natan@email.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 43,
+			"name": "Jane Doe",
+			"email": "janedoe@email.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		},
+		{
+			"id": 44,
+			"name": "John Doe",
+			"email": "johndoe@email.com",
+			"password": "secret",
+			"status": "A",
+			"role": "C"
+		}
+	]
+}

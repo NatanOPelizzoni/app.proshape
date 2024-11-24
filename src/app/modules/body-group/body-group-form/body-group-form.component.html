@@ -1,0 +1,45 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card px-6 py-6">
+			<p-toolbar styleClass="mb-4">
+				<ng-template pTemplate="left">
+				</ng-template>
+				<ng-template pTemplate="right">
+					<div class="my-2">
+						<button pButton pRipple label="Voltar" icon="pi pi-arrow-left" class="p-button-default mr-2" (click)="redirectToList()" ></button>
+						<button *ngIf="!readonly" pButton pRipple label="Salvar" icon="pi pi-save" class="p-button-success" [disabled]="form.invalid" (click)="save()" ></button>
+						<button *ngIf="readonly" pButton pRipple label="Editar" icon="pi pi-pencil" class="p-button-warning" [disabled]="!readonly" (click)="redirectToEdit()" ></button>
+					</div>
+				</ng-template>
+			</p-toolbar>
+
+			<div class="col-12">
+				<form [formGroup]="form">
+					<div class="card">
+						<h5>{{ headerTitle }}</h5>
+						<div class="p-fluid p-formgrid grid">
+							<div class="field col-12 md:col-6"> <!-- NAME -->
+								<label htmlFor="name">Nome *</label>
+								<input [readonly]="readonly" [required]="true" formControlName="name" pInputText id="name" type="text" />
+								<small class="p-error block"
+									   *ngIf="form.get('name')?.invalid && form.get('name')?.dirty"
+								>
+									Nome é obrigatório!
+								</small>
+							</div> <!-- NAME -->
+							<div class="field col-12 md:col-6"> <!-- STATUS -->
+								<label htmlFor="status">Status *</label>
+								<p-dropdown [readonly]="readonly" [required]="true" formControlName="status" [options]="dropdownStatus" placeholder="Selecione um status" [showClear]="true" optionValue="value" optionLabel="description"></p-dropdown>
+								<small class="p-error block"
+									   *ngIf="form.get('status')?.invalid && form.get('status')?.dirty"
+								>
+									Status é obrigatório!
+								</small>
+							</div> <!-- STATUS -->
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
