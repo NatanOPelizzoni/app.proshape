@@ -82,7 +82,7 @@
 													</span>
 												</div>
 												<div>
-													<button *ngIf="!readonly" pButton pRipple class="p-button-default p-button-icon-only m-1" pTooltip="Gerar treino com IA" tooltipPosition="top" (click)="generateTrainingSheetWithAI()">
+													<button *ngIf="!readonly" pButton pRipple class="p-button-default p-button-icon-only m-1" pTooltip="Gerar treino com IA" tooltipPosition="top" [disabled]="btnGenerateTrainingSheetWithAIDisabled" (click)="generateTrainingSheetWithAI()">
 														<i class="fas fa-robot"></i>
 													</button>
 													<button *ngIf="!readonly" pButton pRipple class="p-button-danger p-button-icon-only m-1" pTooltip="Remover exercícios selecionados" tooltipPosition="top" (click)="openRemoveSelectedExercisesDialog()"  [disabled]="!selectedExercises || !selectedExercises.length">
