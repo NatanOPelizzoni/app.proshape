@@ -76,6 +76,8 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 	submitted: boolean = false;
 	exerciseDialog: boolean = false;
 
+	btnGenerateTrainingSheetWithAIDisabled: boolean = false;
+
 	private subscriptions: Subscription[] = [];
 
 	constructor(
@@ -236,7 +238,36 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 	}
 
 	generateTrainingSheetWithAI() {
-		// TODO: Implementar lógica para gerar ficha de treino com IA
+		if (!this.form.get('client_id')?.value) {
+			this.toastService.showToast('warn', 'Atenção', 'Cliente não selecionado');
+			return;
+		}
+
+		const clientId = this.form.get('client_id')?.value;
+		this.toastService.showToast('warn', 'Atenção', 'Ficha de treino está sendo gerada!', 3000);
+		this.exercises = [];
+		this.btnGenerateTrainingSheetWithAIDisabled = true;
+		this.trainingSheet.generateTrainingSheet(clientId).subscribe(
+			response => {
+				if (typeof response === 'object' && response !== null) {
+					this.toastService.showToast('success', 'Sucesso', 'Ficha de treino gerada com sucesso', 3000);
+					if ('exercises' in response) {
+						this.exercises = this._populateExerciseDescriptions(response.exercises);
+					} else if (response.length > 1) {
+						this.exercises = this._populateExerciseDescriptions(response);
+					}
+					this._updateFormExercises();
+					this._loadFixedValues();
+				} else {
+					this.toastService.showToast('error', 'Erro', 'Erro ao gerar ficha de treino', 3000);
+				}
+				this.btnGenerateTrainingSheetWithAIDisabled = false;
+			},
+			error => {
+				this.toastService.showCrudAlerts(error.error.errors);
+				this.btnGenerateTrainingSheetWithAIDisabled = false;
+			}
+		);
 	}
 
 	private _initializeData() {
@@ -446,6 +477,20 @@ export class TrainingSheetFormComponent implements OnInit, OnDestroy, AfterConte
 	private _updateFormExercises() {
 		this.form.patchValue({
 			exercises: JSON.stringify(this.exercises)
+		});
+	}
+
+	private _populateExerciseDescriptions(exercises: TrainingSheetExercise[]): TrainingSheetExercise[] {
+		return exercises.map(exercise => {
+			const exerciseDropdown = this.dropdownExercises.find((e: any) => e.value === exercise.exercise_id);
+			if (exerciseDropdown) {
+				exercise.exercise_description = exerciseDropdown.description;
+				exercise.body_group_description = this.bodyGroups[exerciseDropdown.body_group_id] || '';
+			} else {
+				exercise.exercise_description = '';
+				exercise.body_group_description = '';
+			}
+			return exercise;
 		});
 	}
 }

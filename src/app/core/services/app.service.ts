@@ -67,7 +67,7 @@ export class AppService {
 		return this.http.patch<T>(url, body, options);
 	}
 
-	post<T>(url: string, body: any | null, options: any = null): Observable<any> {
+	post<T>(url: string, body: any | null, options: any = {}): Observable<any> {
 		return this.http.post<any>(url, body, options);
 	}
 
